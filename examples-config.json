@@ -1,0 +1,205 @@
+{
+  "examples": {
+    "fhe-counter": {
+      "contract": "contracts/basic/FHECounter.sol",
+      "test": "test/basic/FHECounter.ts",
+      "description": "A simple FHE counter demonstrating basic encrypted operations"
+    },
+    "encrypt-single-value": {
+      "contract": "contracts/basic/encrypt/EncryptSingleValue.sol",
+      "test": "test/basic/encrypt/EncryptSingleValue.ts",
+      "description": "Demonstrates FHE encryption mechanism and common pitfalls"
+    },
+    "encrypt-multiple-values": {
+      "contract": "contracts/basic/encrypt/EncryptMultipleValues.sol",
+      "test": "test/basic/encrypt/EncryptMultipleValues.ts",
+      "description": "Shows how to encrypt and handle multiple values"
+    },
+    "user-decrypt-single-value": {
+      "contract": "contracts/basic/decrypt/UserDecryptSingleValue.sol",
+      "test": "test/basic/decrypt/UserDecryptSingleValue.ts",
+      "description": "Demonstrates user decryption and permission requirements"
+    },
+    "user-decrypt-multiple-values": {
+      "contract": "contracts/basic/decrypt/UserDecryptMultipleValues.sol",
+      "test": "test/basic/decrypt/UserDecryptMultipleValues.ts",
+      "description": "Shows how to decrypt multiple encrypted values"
+    },
+    "public-decrypt-single-value": {
+      "contract": "contracts/basic/decrypt/PublicDecryptSingleValue.sol",
+      "test": "test/basic/decrypt/PublicDecryptSingleValue.ts",
+      "description": "Demonstrates public decryption mechanism"
+    },
+    "public-decrypt-multiple-values": {
+      "contract": "contracts/basic/decrypt/PublicDecryptMultipleValues.sol",
+      "test": "test/basic/decrypt/PublicDecryptMultipleValues.ts",
+      "description": "Shows public decryption with multiple values"
+    },
+    "fhe-add": {
+      "contract": "contracts/basic/fhe-operations/FHEAdd.sol",
+      "test": "test/basic/fhe-operators/FHEAdd.ts",
+      "description": "Demonstrates FHE addition operations"
+    },
+    "fhe-if-then-else": {
+      "contract": "contracts/basic/fhe-operations/FHEIfThenElse.sol",
+      "test": "test/basic/fhe-operators/FHEIfThenElse.ts",
+      "description": "Shows conditional operations on encrypted values"
+    },
+    "blind-auction": {
+      "contract": "contracts/auctions/BlindAuction.sol",
+      "test": "test/blindAuction/BlindAuction.ts",
+      "testFixture": "test/blindAuction/BlindAuction.fixture.ts",
+      "description": "Sealed-bid auction with confidential bids"
+    },
+    "confidential-dutch-auction": {
+      "contract": "contracts/auctions/ConfidentialDutchAuction.sol",
+      "test": "test/confidentialDutchAuction/ConfidentialDutchAuction.ts",
+      "description": "Dutch auction with encrypted prices"
+    },
+    "erc7984-example": {
+      "contract": "contracts/openzeppelin-confidential-contracts/ERC7984Example.sol",
+      "test": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.test.ts",
+      "testFixture": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.fixture.ts",
+      "description": "ERC7984 confidential token standard implementation"
+    }
+  },
+  "categories": {
+    "basic": {
+      "name": "Basic FHEVM Examples",
+      "description": "Fundamental FHEVM operations including encryption, decryption, and basic FHE operations",
+      "contracts": [
+        {
+          "path": "contracts/basic/FHECounter.sol",
+          "test": "test/basic/FHECounter.ts"
+        },
+        {
+          "path": "contracts/basic/encrypt/EncryptSingleValue.sol",
+          "test": "test/basic/encrypt/EncryptSingleValue.ts"
+        },
+        {
+          "path": "contracts/basic/encrypt/EncryptMultipleValues.sol",
+          "test": "test/basic/encrypt/EncryptMultipleValues.ts"
+        },
+        {
+          "path": "contracts/basic/decrypt/UserDecryptSingleValue.sol",
+          "test": "test/basic/decrypt/UserDecryptSingleValue.ts"
+        },
+        {
+          "path": "contracts/basic/decrypt/UserDecryptMultipleValues.sol",
+          "test": "test/basic/decrypt/UserDecryptMultipleValues.ts"
+        },
+        {
+          "path": "contracts/basic/decrypt/PublicDecryptSingleValue.sol",
+          "test": "test/basic/decrypt/PublicDecryptSingleValue.ts"
+        },
+        {
+          "path": "contracts/basic/decrypt/PublicDecryptMultipleValues.sol",
+          "test": "test/basic/decrypt/PublicDecryptMultipleValues.ts"
+        },
+        {
+          "path": "contracts/basic/fhe-operations/FHEAdd.sol",
+          "test": "test/basic/fhe-operators/FHEAdd.ts"
+        },
+        {
+          "path": "contracts/basic/fhe-operations/FHEIfThenElse.sol",
+          "test": "test/basic/fhe-operators/FHEIfThenElse.ts"
+        }
+      ]
+    },
+    "auctions": {
+      "name": "Auction Examples",
+      "description": "Advanced auction implementations using confidential bids and prices",
+      "contracts": [
+        {
+          "path": "contracts/auctions/BlindAuction.sol",
+          "test": "test/blindAuction/BlindAuction.ts",
+          "fixture": "test/blindAuction/BlindAuction.fixture.ts"
+        },
+        {
+          "path": "contracts/auctions/ConfidentialDutchAuction.sol",
+          "test": "test/confidentialDutchAuction/ConfidentialDutchAuction.ts"
+        }
+      ]
+    },
+    "openzeppelin": {
+      "name": "OpenZeppelin Confidential Contracts",
+      "description": "ERC7984 and confidential token implementations using OpenZeppelin library",
+      "contracts": [
+        {
+          "path": "contracts/openzeppelin-confidential-contracts/ERC7984Example.sol",
+          "test": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.test.ts",
+          "fixture": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.fixture.ts"
+        },
+        {
+          "path": "contracts/openzeppelin-confidential-contracts/ERC7984Wrapper.sol",
+          "test": "test/openzeppelin-confidential-contracts/ERC7984Wrapper.test.ts"
+        }
+      ],
+      "additionalDeps": {
+        "@openzeppelin/confidential-contracts": "^0.1.0"
+      }
+    },
+    "games": {
+      "name": "Game Examples",
+      "description": "Privacy-preserving game implementations using FHEVM",
+      "contracts": [
+        {
+          "path": "contracts/fheWordle/FHEWordle.sol",
+          "test": "test/fheWordle/FHEwordle.ts",
+          "additionalFiles": [
+            "test/fheWordle/validWordsList.ts",
+            "test/fheWordle/wordslist.ts"
+          ]
+        },
+        {
+          "path": "contracts/fheWordle/FHEWordleFactory.sol",
+          "test": "test/fheWordle/FHEwordle.ts"
+        }
+      ]
+    }
+  },
+  "docs": {
+    "fhe-counter": {
+      "title": "FHE Counter",
+      "description": "This example demonstrates how to build a confidential counter using FHEVM, in comparison to a simple counter.",
+      "output": "docs/fhe-counter.md",
+      "category": "Basic"
+    },
+    "encrypt-single-value": {
+      "title": "Encrypt Single Value",
+      "description": "This example demonstrates the FHE encryption mechanism and highlights common pitfalls developers may encounter.",
+      "output": "docs/fhe-encrypt-single-value.md",
+      "category": "Basic - Encryption"
+    },
+    "encrypt-multiple-values": {
+      "title": "Encrypt Multiple Values",
+      "description": "This example shows how to encrypt and handle multiple values in a single transaction.",
+      "output": "docs/fhe-encrypt-multiple-values.md",
+      "category": "Basic - Encryption"
+    },
+    "user-decrypt-single-value": {
+      "title": "User Decrypt Single Value",
+      "description": "This example demonstrates the FHE user decryption mechanism and highlights common pitfalls developers may encounter.",
+      "output": "docs/fhe-user-decrypt-single-value.md",
+      "category": "Basic - Decryption"
+    },
+    "user-decrypt-multiple-values": {
+      "title": "User Decrypt Multiple Values",
+      "description": "This example shows how to decrypt multiple encrypted values for a user.",
+      "output": "docs/fhe-user-decrypt-multiple-values.md",
+      "category": "Basic - Decryption"
+    },
+    "fhe-add": {
+      "title": "FHE Add",
+      "description": "This example demonstrates FHE addition operations on encrypted values.",
+      "output": "docs/fheadd.md",
+      "category": "Basic - FHE Operations"
+    },
+    "fhe-if-then-else": {
+      "title": "FHE If-Then-Else",
+      "description": "This example shows conditional operations on encrypted values using FHE.",
+      "output": "docs/fheifthenelse.md",
+      "category": "Basic - FHE Operations"
+    }
+  }
+}
