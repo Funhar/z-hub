@@ -1,0 +1,37 @@
+{
+  "name": "fhevm-examples-generator",
+  "version": "1.0.0",
+  "description": "Tooling for generating standalone FHEVM example repositories and documentation",
+  "scripts": {
+    "create-example": "npx ts-node scripts/create-fhevm-example.ts",
+    "create-category": "npx ts-node scripts/create-fhevm-category.ts",
+    "generate-docs": "npx ts-node scripts/generate-docs.ts",
+    "generate-all-docs": "npx ts-node scripts/generate-docs.ts --all",
+    "help:create": "npx ts-node scripts/create-fhevm-example.ts --help",
+    "help:category": "npx ts-node scripts/create-fhevm-category.ts --help",
+    "help:docs": "npx ts-node scripts/generate-docs.ts --help"
+  },
+  "keywords": [
+    "fhevm",
+    "zama",
+    "encryption",
+    "blockchain",
+    "examples",
+    "documentation",
+    "generator"
+  ],
+  "author": "Zama",
+  "license": "BSD-3-Clause-Clear",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zama-ai/fhevm-examples"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

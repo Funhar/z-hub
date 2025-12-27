@@ -1,0 +1,11 @@
+.env
+test-output/
+.claude/
+.vscode/
+.DS_Store
+.idea/
+.agent
+CLAUDE.md
+node_modules/
+generated/
+examples/
