@@ -467,6 +467,21 @@ async function main() {
         process.exit(1);
       }
       process.exit(0);
+    } else if (subcommand === "test") {
+      // Test subcommand: npm run cli:test [example-name | --list]
+      const arg = args[1] || "";
+      try {
+        if (arg) {
+          execSync(`npx ts-node scripts/run-tests.ts ${arg}`, {
+            stdio: "inherit",
+          });
+        } else {
+          execSync("npx ts-node scripts/run-tests.ts", { stdio: "inherit" });
+        }
+      } catch (error) {
+        process.exit(1);
+      }
+      process.exit(0);
     }
 
     // No subcommand - show interactive menu

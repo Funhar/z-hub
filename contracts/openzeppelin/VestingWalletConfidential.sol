@@ -16,6 +16,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuardTransient} from "@openzeppelin/contracts/utils/ReentrancyGuardTransient.sol";
 import {ZamaEthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
 import {IERC7984} from "@openzeppelin/confidential-contracts/interfaces/IERC7984.sol";
+import {ERC7984} from "@openzeppelin/confidential-contracts/token/ERC7984/ERC7984.sol";
 
 contract VestingWalletConfidential is Ownable, ReentrancyGuardTransient, ZamaEthereumConfig {
     /// @notice Mapping of token address to released amount (encrypted)
@@ -123,5 +124,21 @@ contract VestingWalletConfidential is Ownable, ReentrancyGuardTransient, ZamaEth
         } else {
             return FHE.div(FHE.mul(totalAllocation, (timestamp - start())), duration());
         }
+    }
+}
+
+/**
+ * @title ERC7984Example
+ * @notice Simple ERC7984 token for testing VestingWallet
+ */
+contract ERC7984Example is ERC7984, ZamaEthereumConfig {
+    constructor(
+        address initialOwner,
+        uint64 initialSupply,
+        string memory name,
+        string memory symbol,
+        string memory uri
+    ) ERC7984(name, symbol, uri) {
+        _mint(initialOwner, FHE.asEuint64(initialSupply));
     }
 }

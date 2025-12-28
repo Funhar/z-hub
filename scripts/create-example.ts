@@ -125,7 +125,8 @@ func.tags = ["${contractName}"];
 function updatePackageJson(
   outputDir: string,
   exampleName: string,
-  description: string
+  description: string,
+  contractPath: string
 ): void {
   const packageJsonPath = path.join(outputDir, "package.json");
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
@@ -133,6 +134,13 @@ function updatePackageJson(
   packageJson.name = `fhevm-example-${exampleName}`;
   packageJson.description = description;
   packageJson.homepage = `https://github.com/zama-ai/fhevm-examples/${exampleName}`;
+
+  // Add OpenZeppelin dependencies if the example is from openzeppelin folder
+  if (contractPath.includes("/openzeppelin/")) {
+    packageJson.dependencies = packageJson.dependencies || {};
+    packageJson.dependencies["@openzeppelin/contracts"] = "^5.0.0";
+    packageJson.dependencies["@openzeppelin/confidential-contracts"] = "^0.3.0";
+  }
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }
@@ -318,7 +326,12 @@ function createExample(exampleName: string, outputDir: string): void {
   // Step 4: Update configuration files
   log("\n⚙️  Step 4: Updating configuration...", Color.Cyan);
   updateDeployScript(outputDir, contractName);
-  updatePackageJson(outputDir, exampleName, example.description);
+  updatePackageJson(
+    outputDir,
+    exampleName,
+    example.description,
+    example.contract
+  );
   success("Configuration updated");
 
   // Step 5: Generate README

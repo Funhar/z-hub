@@ -10,6 +10,7 @@
     "cli:list": "npx ts-node scripts/cli.ts list",
     "cli:scan": "npx ts-node scripts/cli.ts scan",
     "cli:validate": "npx ts-node scripts/cli.ts validate",
+    "cli:test": "npx ts-node scripts/cli.ts test",
     "help": "npx ts-node scripts/cli.ts --help"
   },
   "keywords": [
