@@ -145,8 +145,13 @@ function generateDocsConfig(
   const category = detectCategory(contractPath);
   const categoryName = category ? getCategoryDisplayName(category) : "Other";
 
+  // Generate title: add space before uppercase letters that follow lowercase
+  const title = contractName
+    .replace(/([a-z])([A-Z])/g, "$1 $2") // lowercase followed by uppercase
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2"); // acronym followed by word
+
   return {
-    title: contractName.replace(/([A-Z])/g, " $1").trim(),
+    title,
     description: `Documentation for ${contractName}`,
     output: `docs/${exampleKey}.md`,
     category: categoryName,
