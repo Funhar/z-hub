@@ -15,7 +15,7 @@ import {IERC20} from "@openzeppelin/contracts/interfaces/IERC20.sol";
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {ERC7984ERC20Wrapper as ERC7984ERC20WrapperBase, ERC7984} from "@openzeppelin/confidential-contracts/token/ERC7984/extensions/ERC7984ERC20Wrapper.sol";
 
-contract ConfidentialERC20Wrapper is ERC7984ERC20WrapperBase, ZamaEthereumConfig {
+contract ERC7984ERC20Wrapper is ERC7984ERC20WrapperBase, ZamaEthereumConfig {
     /**
      * @notice Creates a new wrapper for an ERC20 token
      * @param token The underlying ERC20 token to wrap

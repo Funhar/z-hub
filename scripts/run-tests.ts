@@ -67,8 +67,15 @@ async function testExample(exampleName: string): Promise<TestResult> {
 
     // Step 3: Compile
     const compileSpinner = ora("Compiling contracts...").start();
-    execSync("npm run compile", { stdio: "pipe", cwd: exampleDir });
-    compileSpinner.succeed("Compilation successful");
+    try {
+      execSync("npm run compile", { stdio: "pipe", cwd: exampleDir });
+      compileSpinner.succeed("Compilation successful");
+    } catch (compileError: any) {
+      compileSpinner.fail("Compilation failed");
+      const stdout = compileError.stdout?.toString() || "";
+      const stderr = compileError.stderr?.toString() || "";
+      throw new Error(`Compile Error:\n${stdout}\n${stderr}`);
+    }
 
     // Step 4: Run tests
     const testSpinner = ora("Running tests...").start();
@@ -81,7 +88,9 @@ async function testExample(exampleName: string): Promise<TestResult> {
       testSpinner.succeed("Tests passed");
     } catch (testError: any) {
       testSpinner.fail("Tests failed");
-      throw new Error(testError.stdout?.toString() || testError.message);
+      const stdout = testError.stdout?.toString() || "";
+      const stderr = testError.stderr?.toString() || "";
+      throw new Error(`Test Error:\n${stdout}\n${stderr}`);
     }
 
     const duration = (Date.now() - startTime) / 1000;
@@ -120,8 +129,11 @@ function displayResults(results: TestResult[]): void {
     } else {
       console.log(chalk.red(`  ❌ ${result.example}`));
       if (result.error) {
-        const shortError = result.error.split("\n").slice(0, 3).join("\n");
-        console.log(chalk.gray(`      └── ${shortError}`));
+        // Show more error lines for debugging
+        const errorLines = result.error.split("\n").slice(0, 30).join("\n");
+        console.log(chalk.yellow("\n--- Error Details ---"));
+        console.log(chalk.gray(errorLines));
+        console.log(chalk.yellow("--- End Error ---\n"));
       }
       failed++;
     }

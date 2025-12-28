@@ -31,7 +31,7 @@ describe("ERC7984ERC20Wrapper", function () {
     ]);
 
     // Deploy the wrapper
-    wrapper = await ethers.deployContract("ConfidentialERC20Wrapper", [
+    wrapper = await ethers.deployContract("ERC7984ERC20Wrapper", [
       await erc20.getAddress(),
       "Wrapped Confidential Token",
       "wCTKN",
