@@ -10,8 +10,8 @@
 - Decryption
   - [User decrypt single value](fhe-user-decrypt-single-value.md)
   - [User decrypt multiple values](fhe-user-decrypt-multiple-values.md)
-  - [Public Decrypt single value]()
-  - [Public Decrypt multiple values]()
+  - [Public Decrypt Single Value](public-decrypt-single-value.md)
+  - [Public Decrypt Multiple Values](public-decrypt-multiple-values.md)
 
 ## Openzeppelin
 - [ERC7984 ERC20 Wrapper](erc7984-erc20-wrapper.md)

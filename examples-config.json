@@ -45,33 +45,6 @@
       "test": "test/basic/fhe-operations/FHEIfThenElse.ts",
       "description": "Shows conditional operations on encrypted values"
     },
-    "blind-auction": {
-      "contract": "contracts/auctions/BlindAuction.sol",
-      "test": "test/blindAuction/BlindAuction.ts",
-      "testFixture": "test/blindAuction/BlindAuction.fixture.ts",
-      "description": "Sealed-bid auction with confidential bids"
-    },
-    "confidential-dutch-auction": {
-      "contract": "contracts/auctions/ConfidentialDutchAuction.sol",
-      "test": "test/confidentialDutchAuction/ConfidentialDutchAuction.ts",
-      "description": "Dutch auction with encrypted prices"
-    },
-    "erc7984-example": {
-      "contract": "contracts/openzeppelin-confidential-contracts/ERC7984Example.sol",
-      "test": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.test.ts",
-      "testFixture": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.fixture.ts",
-      "description": "ERC7984 confidential token standard implementation"
-    },
-    "highest-die-roll": {
-      "contract": "contracts/basic/decrypt/PublicDecryptMultipleValues.sol",
-      "test": "test/basic/decrypt/PublicDecryptMultipleValues.ts",
-      "description": "Dice game with encrypted rolls and public winner reveal"
-    },
-    "heads-or-tails": {
-      "contract": "contracts/basic/decrypt/PublicDecryptSingleValue.sol",
-      "test": "test/basic/decrypt/PublicDecryptSingleValue.ts",
-      "description": "Coin flip game with encrypted result"
-    },
     "erc7984-erc20-wrapper": {
       "contract": "contracts/openzeppelin/ERC7984ERC20Wrapper.sol",
       "test": "test/openzeppelin/ERC7984ERC20Wrapper.ts",
@@ -144,17 +117,7 @@
     "auctions": {
       "name": "Auction Examples",
       "description": "Advanced auction implementations using confidential bids and prices",
-      "contracts": [
-        {
-          "path": "contracts/auctions/BlindAuction.sol",
-          "test": "test/blindAuction/BlindAuction.ts",
-          "fixture": "test/blindAuction/BlindAuction.fixture.ts"
-        },
-        {
-          "path": "contracts/auctions/ConfidentialDutchAuction.sol",
-          "test": "test/confidentialDutchAuction/ConfidentialDutchAuction.ts"
-        }
-      ]
+      "contracts": []
     },
     "openzeppelin": {
       "name": "OpenZeppelin Confidential Contracts",
@@ -188,20 +151,7 @@
     "games": {
       "name": "Game Examples",
       "description": "Privacy-preserving game implementations using FHEVM",
-      "contracts": [
-        {
-          "path": "contracts/fheWordle/FHEWordle.sol",
-          "test": "test/fheWordle/FHEwordle.ts",
-          "additionalFiles": [
-            "test/fheWordle/validWordsList.ts",
-            "test/fheWordle/wordslist.ts"
-          ]
-        },
-        {
-          "path": "contracts/fheWordle/FHEWordleFactory.sol",
-          "test": "test/fheWordle/FHEwordle.ts"
-        }
-      ]
+      "contracts": []
     }
   },
   "docs": {
@@ -246,6 +196,18 @@
       "description": "This example shows conditional operations on encrypted values using FHE.",
       "output": "docs/fheifthenelse.md",
       "category": "Basic - FHE Operations"
+    },
+    "public-decrypt-single-value": {
+      "title": "Public Decrypt Single Value",
+      "description": "Demonstrates public decryption mechanism for single values.",
+      "output": "docs/public-decrypt-single-value.md",
+      "category": "Basic - Decryption"
+    },
+    "public-decrypt-multiple-values": {
+      "title": "Public Decrypt Multiple Values",
+      "description": "Shows public decryption with multiple values.",
+      "output": "docs/public-decrypt-multiple-values.md",
+      "category": "Basic - Decryption"
     },
     "erc7984-erc20-wrapper": {
       "title": "ERC7984 ERC20 Wrapper",

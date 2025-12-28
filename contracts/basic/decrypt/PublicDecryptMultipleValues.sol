@@ -5,12 +5,12 @@ import { FHE, euint8 } from "@fhevm/solidity/lib/FHE.sol";
 import { ZamaEthereumConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
 
 /**
- * @title HighestDieRoll
- * @notice Implements a simple 8-sided Die Roll game demonstrating public, permissionless decryption
- *         using the FHE.makePubliclyDecryptable feature.
+ * @title PublicDecryptMultipleValues
+ * @notice Demonstrates public decryption of multiple encrypted values using FHE.makePubliclyDecryptable.
+ *         Implements a simple die roll game as an example.
  * @dev Inherits from ZamaEthereumConfig to access FHE functions like FHE.randEbool() and FHE.verifySignatures().
  */
-contract HighestDieRoll is ZamaEthereumConfig {
+contract PublicDecryptMultipleValues is ZamaEthereumConfig {
     constructor() {}
 
     /**

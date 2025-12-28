@@ -5,12 +5,12 @@ import { FHE, ebool } from "@fhevm/solidity/lib/FHE.sol";
 import { ZamaEthereumConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
 
 /**
- * @title HeadsOrTails
- * @notice Implements a simple Heads or Tails game demonstrating public, permissionless decryption
- *         using the FHE.makePubliclyDecryptable feature.
+ * @title PublicDecryptSingleValue
+ * @notice Demonstrates public decryption of a single encrypted value using FHE.makePubliclyDecryptable.
+ *         Implements a simple Heads or Tails game as an example.
  * @dev Inherits from ZamaEthereumConfig to access FHE functions like FHE.randEbool() and FHE.verifySignatures().
  */
-contract HeadsOrTails is ZamaEthereumConfig {
+contract PublicDecryptSingleValue is ZamaEthereumConfig {
     constructor() {}
 
     /**

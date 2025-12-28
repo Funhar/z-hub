@@ -458,7 +458,14 @@ async function main() {
       listExamples();
       process.exit(0);
     } else if (subcommand === "validate") {
-      console.log(chalk.yellow("\n⚠️  Validate feature coming soon!\n"));
+      const spinner = ora("Validating project...").start();
+      try {
+        execSync("npx ts-node scripts/validate.ts", { stdio: "inherit" });
+        spinner.stop();
+      } catch (error) {
+        spinner.fail(chalk.red("Validation failed"));
+        process.exit(1);
+      }
       process.exit(0);
     }
 
