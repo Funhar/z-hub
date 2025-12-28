@@ -290,33 +290,33 @@ async function main() {
       console.log(chalk.gray("    Launch interactive menu\n"));
 
       console.log(
-        chalk.white("  npm run cli-create <example-name> [output-dir]")
+        chalk.white("  npm run cli:create <example-name> [output-dir]")
       );
       console.log(chalk.gray("    Create a single example project"));
       console.log(
-        chalk.gray("    Example: npm run cli-create fhe-counter ./my-project\n")
+        chalk.gray("    Example: npm run cli:create fhe-counter ./my-project\n")
       );
 
       console.log(
-        chalk.white("  npm run cli-category <category-name> [output-dir]")
+        chalk.white("  npm run cli:category <category-name> [output-dir]")
       );
       console.log(
         chalk.gray("    Create a category project with multiple examples")
       );
       console.log(
-        chalk.gray("    Example: npm run cli-category basic ./my-examples\n")
+        chalk.gray("    Example: npm run cli:category basic ./my-examples\n")
       );
 
-      console.log(chalk.white("  npm run cli-docs [example-name|--all]"));
+      console.log(chalk.white("  npm run cli:docs [example-name|--all]"));
       console.log(chalk.gray("    Generate documentation"));
-      console.log(chalk.gray("    Example: npm run cli-docs fhe-counter\n"));
+      console.log(chalk.gray("    Example: npm run cli:docs fhe-counter\n"));
 
-      console.log(chalk.white("  npm run cli-list"));
+      console.log(chalk.white("  npm run cli:list"));
       console.log(
         chalk.gray("    List all available examples and categories\n")
       );
 
-      console.log(chalk.white("  npm run cli-validate"));
+      console.log(chalk.white("  npm run cli:validate"));
       console.log(chalk.gray("    Validate examples (coming soon)\n"));
 
       console.log(chalk.yellow("Options:\n"));

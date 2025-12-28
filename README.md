@@ -30,20 +30,20 @@ The interactive CLI provides a user-friendly menu to:
 
 ```bash
 # Create a single example
-npm run cli-create <example-name> [output-dir]
-npm run cli-create fhe-counter ./my-project
+npm run cli:create <example-name> [output-dir]
+npm run cli:create fhe-counter ./my-project
 
 # Create a category project
-npm run cli-category <category-name> [output-dir]
-npm run cli-category basic ./my-basic-examples
+npm run cli:category <category-name> [output-dir]
+npm run cli:category basic ./my-basic-examples
 
 # Generate documentation
-npm run cli-docs [example-name|--all]
-npm run cli-docs fhe-counter
-npm run cli-docs --all
+npm run cli:docs [example-name|--all]
+npm run cli:docs fhe-counter
+npm run cli:docs --all
 
 # List all examples
-npm run cli-list
+npm run cli:list
 ```
 
 ## Project Structure

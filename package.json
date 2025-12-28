@@ -4,11 +4,11 @@
   "description": "Tooling for generating standalone FHEVM example repositories and documentation",
   "scripts": {
     "cli": "npx ts-node scripts/cli.ts",
-    "cli-create": "npx ts-node scripts/cli.ts create",
-    "cli-category": "npx ts-node scripts/cli.ts category",
-    "cli-docs": "npx ts-node scripts/cli.ts docs",
-    "cli-list": "npx ts-node scripts/cli.ts list",
-    "cli-validate": "npx ts-node scripts/cli.ts validate",
+    "cli:create": "npx ts-node scripts/cli.ts create",
+    "cli:category": "npx ts-node scripts/cli.ts category",
+    "cli:docs": "npx ts-node scripts/cli.ts docs",
+    "cli:list": "npx ts-node scripts/cli.ts list",
+    "cli:validate": "npx ts-node scripts/cli.ts validate",
     "help": "npx ts-node scripts/cli.ts --help"
   },
   "keywords": [
