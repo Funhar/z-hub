@@ -22,6 +22,10 @@
   - [Handle Lifecycle](handle-lifecycle.md)
   - [Anti Patterns](anti-patterns.md)
 
+## Advanced
+
+- [Blind Auction](blind-auction.md)
+
 ## OpenZeppelin
 
 - [ERC7984 Example](erc7984-example.md)
@@ -29,7 +33,3 @@
 - [Swap ERC7984 To ERC20](swap-erc7984-to-erc20.md)
 - [Swap ERC7984 To ERC7984](swap-erc7984-to-erc7984.md)
 - [Vesting Wallet Confidential](vesting-wallet-confidential.md)
-
-## Advanced
-
-- [Blind Auction](blind-auction.md)
