@@ -12,3 +12,10 @@
   - [User decrypt multiple values](fhe-user-decrypt-multiple-values.md)
   - [Public Decrypt single value]()
   - [Public Decrypt multiple values]()
+
+## Openzeppelin
+- [ERC7984 ERC20 Wrapper](erc7984-erc20-wrapper.md)
+- [Vesting Wallet Confidential](vesting-wallet-confidential.md)
+- [Swap ERC7984 To ERC20](swap-erc7984-to-erc20.md)
+- [Swap ERC7984 To ERC7984](swap-erc7984-to-erc7984.md)
+- [ERC7984 Example](erc7984-example.md)

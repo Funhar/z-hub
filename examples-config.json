@@ -72,12 +72,12 @@
       "test": "test/basic/decrypt/PublicDecryptSingleValue.ts",
       "description": "Coin flip game with encrypted result"
     },
-    "erc7984erc20wrapper-example": {
-      "contract": "contracts/openzeppelin/ERC7984ERC20WrapperExample.sol",
-      "test": "test/openzeppelin/ERC7984ERC20WrapperExample.ts",
+    "erc7984-erc20-wrapper": {
+      "contract": "contracts/openzeppelin/ERC7984ERC20Wrapper.sol",
+      "test": "test/openzeppelin/ERC7984ERC20Wrapper.ts",
       "description": "Wraps ERC20 tokens into confidential ERC7984 tokens"
     },
-    "erc7984example": {
+    "erc7984-example": {
       "contract": "contracts/openzeppelin/ERC7984Example.sol",
       "test": "test/openzeppelin/ERC7984Example.ts",
       "description": "Basic confidential token with mint/burn functionality"
@@ -87,30 +87,15 @@
       "test": "test/openzeppelin/VestingWalletConfidential.ts",
       "description": "Linear vesting schedule for confidential tokens"
     },
-    "swap-erc7984to-erc20": {
+    "swap-erc7984-to-erc20": {
       "contract": "contracts/openzeppelin/SwapERC7984ToERC20.sol",
       "test": "test/openzeppelin/SwapERC7984ToERC20.ts",
       "description": "Swaps confidential ERC7984 to standard ERC20 tokens"
     },
-    "swap-erc7984to-erc7984": {
+    "swap-erc7984-to-erc7984": {
       "contract": "contracts/openzeppelin/SwapERC7984ToERC7984.sol",
       "test": "test/openzeppelin/SwapERC7984ToERC7984.ts",
       "description": "Swaps between two confidential ERC7984 tokens"
-    },
-    "confidential-erc20wrapper": {
-      "contract": "contracts/openzeppelin/ConfidentialERC20Wrapper.sol",
-      "test": "test/openzeppelin/ConfidentialERC20Wrapper.ts",
-      "description": "Wraps ERC20 tokens into confidential ERC7984 tokens"
-    },
-    "confidential-token": {
-      "contract": "contracts/openzeppelin/ConfidentialToken.sol",
-      "test": "test/openzeppelin/ConfidentialToken.ts",
-      "description": "Basic confidential token with mint/burn functionality"
-    },
-    "erc7984erc20wrapper": {
-      "contract": "contracts/openzeppelin/ERC7984ERC20Wrapper.sol",
-      "test": "test/openzeppelin/ERC7984ERC20Wrapper.ts",
-      "description": "Wraps ERC20 tokens into confidential ERC7984 tokens"
     }
   },
   "categories": {
@@ -176,21 +161,12 @@
       "description": "ERC7984 and confidential token implementations using OpenZeppelin library",
       "contracts": [
         {
-          "path": "contracts/openzeppelin-confidential-contracts/ERC7984Example.sol",
-          "test": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.test.ts",
-          "fixture": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.fixture.ts"
-        },
-        {
-          "path": "contracts/openzeppelin-confidential-contracts/ERC7984Wrapper.sol",
-          "test": "test/openzeppelin-confidential-contracts/ERC7984Wrapper.test.ts"
-        },
-        {
-          "path": "contracts/openzeppelin/ERC7984ERC20WrapperExample.sol",
-          "test": "test/openzeppelin/ERC7984ERC20WrapperExample.ts"
-        },
-        {
           "path": "contracts/openzeppelin/ERC7984Example.sol",
           "test": "test/openzeppelin/ERC7984Example.ts"
+        },
+        {
+          "path": "contracts/openzeppelin/ERC7984ERC20Wrapper.sol",
+          "test": "test/openzeppelin/ERC7984ERC20Wrapper.ts"
         },
         {
           "path": "contracts/openzeppelin/VestingWalletConfidential.sol",
@@ -203,18 +179,6 @@
         {
           "path": "contracts/openzeppelin/SwapERC7984ToERC7984.sol",
           "test": "test/openzeppelin/SwapERC7984ToERC7984.ts"
-        },
-        {
-          "path": "contracts/openzeppelin/ConfidentialERC20Wrapper.sol",
-          "test": "test/openzeppelin/ConfidentialERC20Wrapper.ts"
-        },
-        {
-          "path": "contracts/openzeppelin/ConfidentialToken.sol",
-          "test": "test/openzeppelin/ConfidentialToken.ts"
-        },
-        {
-          "path": "contracts/openzeppelin/ERC7984ERC20Wrapper.sol",
-          "test": "test/openzeppelin/ERC7984ERC20Wrapper.ts"
         }
       ],
       "additionalDeps": {
@@ -283,16 +247,16 @@
       "output": "docs/fheifthenelse.md",
       "category": "Basic - FHE Operations"
     },
-    "erc7984erc20wrapper-example": {
-      "title": "ERC7984 ERC20 Wrapper Example",
-      "description": "Documentation for ERC7984ERC20WrapperExample",
-      "output": "docs/erc7984erc20wrapper-example.md",
+    "erc7984-erc20-wrapper": {
+      "title": "ERC7984 ERC20 Wrapper",
+      "description": "Documentation for ERC7984ERC20Wrapper",
+      "output": "docs/erc7984-erc20-wrapper.md",
       "category": "Openzeppelin"
     },
-    "erc7984example": {
+    "erc7984-example": {
       "title": "ERC7984 Example",
       "description": "Documentation for ERC7984Example",
-      "output": "docs/erc7984example.md",
+      "output": "docs/erc7984-example.md",
       "category": "Openzeppelin"
     },
     "vesting-wallet-confidential": {
@@ -301,34 +265,16 @@
       "output": "docs/vesting-wallet-confidential.md",
       "category": "Openzeppelin"
     },
-    "swap-erc7984to-erc20": {
+    "swap-erc7984-to-erc20": {
       "title": "Swap ERC7984 To ERC20",
       "description": "Documentation for SwapERC7984ToERC20",
-      "output": "docs/swap-erc7984to-erc20.md",
+      "output": "docs/swap-erc7984-to-erc20.md",
       "category": "Openzeppelin"
     },
-    "swap-erc7984to-erc7984": {
+    "swap-erc7984-to-erc7984": {
       "title": "Swap ERC7984 To ERC7984",
       "description": "Documentation for SwapERC7984ToERC7984",
-      "output": "docs/swap-erc7984to-erc7984.md",
-      "category": "Openzeppelin"
-    },
-    "confidential-erc20wrapper": {
-      "title": "Confidential ERC20 Wrapper",
-      "description": "Documentation for ConfidentialERC20Wrapper",
-      "output": "docs/confidential-erc20wrapper.md",
-      "category": "Openzeppelin"
-    },
-    "confidential-token": {
-      "title": "Confidential Token",
-      "description": "Documentation for ConfidentialToken",
-      "output": "docs/confidential-token.md",
-      "category": "Openzeppelin"
-    },
-    "erc7984erc20wrapper": {
-      "title": "ERC7984 ERC20 Wrapper",
-      "description": "Documentation for ERC7984ERC20Wrapper",
-      "output": "docs/erc7984erc20wrapper.md",
+      "output": "docs/swap-erc7984-to-erc7984.md",
       "category": "Openzeppelin"
     }
   }
