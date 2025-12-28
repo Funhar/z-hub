@@ -104,6 +104,21 @@
       "contract": "contracts/basic/fhe-operations/FHESub.sol",
       "test": "test/basic/fhe-operations/FHESub.ts",
       "description": "Demonstrates FHE subtraction operations"
+    },
+    "dark-pool": {
+      "contract": "contracts/finance/DarkPool.sol",
+      "test": "test/finance/DarkPool.ts",
+      "description": "Order book with hidden prices and amounts"
+    },
+    "private-vault": {
+      "contract": "contracts/finance/PrivateVault.sol",
+      "test": "test/finance/PrivateVault.ts",
+      "description": "Private vault with encrypted deposits and balances"
+    },
+    "secret-voting": {
+      "contract": "contracts/finance/SecretVoting.sol",
+      "test": "test/finance/SecretVoting.ts",
+      "description": "Anonymous voting with encrypted tallies"
     }
   },
   "categories": {
@@ -219,6 +234,24 @@
         {
           "path": "contracts/advanced/BlindAuction.sol",
           "test": "test/advanced/BlindAuction.ts"
+        }
+      ]
+    },
+    "finance": {
+      "name": "Finance Examples",
+      "description": "Privacy-preserving DeFi and financial applications",
+      "contracts": [
+        {
+          "path": "contracts/finance/DarkPool.sol",
+          "test": "test/finance/DarkPool.ts"
+        },
+        {
+          "path": "contracts/finance/PrivateVault.sol",
+          "test": "test/finance/PrivateVault.ts"
+        },
+        {
+          "path": "contracts/finance/SecretVoting.sol",
+          "test": "test/finance/SecretVoting.ts"
         }
       ]
     }
@@ -349,6 +382,24 @@
       "description": "Demonstrates FHE.sub() for subtracting encrypted values",
       "output": "docs/fhe-sub.md",
       "category": "Basic - FHE Operations"
+    },
+    "dark-pool": {
+      "title": "Dark Pool",
+      "description": "Documentation for DarkPool",
+      "output": "docs/dark-pool.md",
+      "category": "Finance"
+    },
+    "private-vault": {
+      "title": "Private Vault",
+      "description": "Documentation for PrivateVault",
+      "output": "docs/private-vault.md",
+      "category": "Finance"
+    },
+    "secret-voting": {
+      "title": "Secret Voting",
+      "description": "Documentation for SecretVoting",
+      "output": "docs/secret-voting.md",
+      "category": "Finance"
     }
   }
 }

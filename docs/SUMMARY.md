@@ -2,13 +2,13 @@
 
 ## Basic
 
-- [FHE Counter](fhe-counter.md)
 - FHE Operations
   - [Add](fheadd.md)
   - [Subtraction](fhe-sub.md)
   - [Equality Comparison](fhe-eq.md)
   - [If Then Else](fheifthenelse.md)
 - Encryption
+  - [FHE Counter](fhe-counter.md)
   - [Encrypt Single Value](fhe-encrypt-single-value.md)
   - [Encrypt Multiple Values](fhe-encrypt-multiple-values.md)
 - Decryption
@@ -25,6 +25,11 @@
 ## Advanced
 
 - [Blind Auction](blind-auction.md)
+
+## Finance
+- [Private Vault](private-vault.md)
+- [Secret Voting](secret-voting.md)
+- [Dark Pool](dark-pool.md)
 
 ## OpenZeppelin
 
