@@ -23,7 +23,10 @@
   - [Anti Patterns](anti-patterns.md)
 
 ## Advanced
-
+- [Anonymous Whistle](anonymous-whistle.md)
+- [Fair Dice](fair-dice.md)
+- [Private Messaging](private-messaging.md)
+- [Secret Tip](secret-tip.md)
 - [Blind Auction](blind-auction.md)
 
 ## Finance

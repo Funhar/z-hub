@@ -8,15 +8,6 @@ import { ZamaEthereumConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
  * @title AntiPatterns
  * @notice Demonstrates common FHEVM mistakes and how to avoid them.
  * @dev This contract shows both WRONG and CORRECT patterns side by side.
- *
- *      ANTI-PATTERN #1: View functions returning encrypted values
- *      - View functions can't grant permissions, so returned values are useless
- *
- *      ANTI-PATTERN #2: Missing FHE.allowThis() after operations
- *      - Contract loses access to computed values after tx ends
- *
- *      ANTI-PATTERN #3: Trying to read encrypted value directly
- *      - Encrypted values can only be read via proper decryption flow
  */
 contract AntiPatterns is ZamaEthereumConfig {
   euint8 private _secretValue;

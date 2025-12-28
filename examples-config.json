@@ -119,6 +119,26 @@
       "contract": "contracts/finance/SecretVoting.sol",
       "test": "test/finance/SecretVoting.ts",
       "description": "Anonymous voting with encrypted tallies"
+    },
+    "anonymous-whistle": {
+      "contract": "contracts/advanced/AnonymousWhistle.sol",
+      "test": "test/advanced/AnonymousWhistle.ts",
+      "description": "Anonymous reporting with identity protection"
+    },
+    "fair-dice": {
+      "contract": "contracts/advanced/FairDice.sol",
+      "test": "test/advanced/FairDice.ts",
+      "description": "Provably fair dice with commit-reveal"
+    },
+    "private-messaging": {
+      "contract": "contracts/advanced/PrivateMessaging.sol",
+      "test": "test/advanced/PrivateMessaging.ts",
+      "description": "Address-based encrypted messaging"
+    },
+    "secret-tip": {
+      "contract": "contracts/advanced/SecretTip.sol",
+      "test": "test/advanced/SecretTip.ts",
+      "description": "Anonymous tipping with hidden amounts"
     }
   },
   "categories": {
@@ -234,6 +254,22 @@
         {
           "path": "contracts/advanced/BlindAuction.sol",
           "test": "test/advanced/BlindAuction.ts"
+        },
+        {
+          "path": "contracts/advanced/AnonymousWhistle.sol",
+          "test": "test/advanced/AnonymousWhistle.ts"
+        },
+        {
+          "path": "contracts/advanced/FairDice.sol",
+          "test": "test/advanced/FairDice.ts"
+        },
+        {
+          "path": "contracts/advanced/PrivateMessaging.sol",
+          "test": "test/advanced/PrivateMessaging.ts"
+        },
+        {
+          "path": "contracts/advanced/SecretTip.sol",
+          "test": "test/advanced/SecretTip.ts"
         }
       ]
     },
@@ -400,6 +436,30 @@
       "description": "Documentation for SecretVoting",
       "output": "docs/secret-voting.md",
       "category": "Finance"
+    },
+    "anonymous-whistle": {
+      "title": "Anonymous Whistle",
+      "description": "Documentation for AnonymousWhistle",
+      "output": "docs/anonymous-whistle.md",
+      "category": "Advanced"
+    },
+    "fair-dice": {
+      "title": "Fair Dice",
+      "description": "Documentation for FairDice",
+      "output": "docs/fair-dice.md",
+      "category": "Advanced"
+    },
+    "private-messaging": {
+      "title": "Private Messaging",
+      "description": "Documentation for PrivateMessaging",
+      "output": "docs/private-messaging.md",
+      "category": "Advanced"
+    },
+    "secret-tip": {
+      "title": "Secret Tip",
+      "description": "Documentation for SecretTip",
+      "output": "docs/secret-tip.md",
+      "category": "Advanced"
     }
   }
 }
