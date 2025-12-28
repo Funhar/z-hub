@@ -7,11 +7,32 @@
  */
 
 import { select, input, confirm } from "@inquirer/prompts";
+import search from "@inquirer/search";
 import chalk from "chalk";
 import ora from "ora";
 import * as fs from "fs";
 import * as path from "path";
-import { execSync } from "child_process";
+import { exec, execSync } from "child_process";
+import { promisify } from "util";
+const execAsync = promisify(exec);
+const ROOT_DIR = path.join(__dirname, "..");
+import boxen from "boxen";
+import figlet from "figlet";
+import {
+  colors,
+  zamaGradient,
+  successGradient,
+  createSpinner,
+  succeedSpinner,
+  failSpinner,
+  createHeader,
+  createNextStepsBox,
+  createInfoBox,
+  styledPrompt,
+  styledChoice,
+  truncateText,
+  theme,
+} from "./utils/theme";
 
 // Load configuration
 function loadConfig() {
@@ -25,24 +46,21 @@ const config = loadConfig();
 // Display banner
 function displayBanner() {
   console.clear();
+  const bannerText = figlet.textSync("Z-HUB", {
+    font: "Standard",
+    horizontalLayout: "fitted",
+  });
+
+  console.log(zamaGradient(bannerText));
   console.log(
-    chalk.cyan.bold(
-      "\n╔═══════════════════════════════════════════════════════╗"
-    )
-  );
-  console.log(
-    chalk.cyan.bold("║                                                       ║")
-  );
-  console.log(
-    chalk.cyan.bold("║       🔐 FHEVM Example Generator (Interactive)       ║")
-  );
-  console.log(
-    chalk.cyan.bold("║                                                       ║")
-  );
-  console.log(
-    chalk.cyan.bold(
-      "╚═══════════════════════════════════════════════════════╝\n"
-    )
+    boxen(chalk.hex(colors.lavender).bold("🔐 FHEVM Example Factory & CLI"), {
+      padding: { top: 0, bottom: 0, left: 1, right: 1 },
+      margin: { top: 1, bottom: 1, left: 0, right: 0 },
+      borderStyle: "round",
+      borderColor: colors.mauve,
+      title: "v1.0.0",
+      titleAlignment: "right",
+    })
   );
 }
 
@@ -51,31 +69,35 @@ async function mainMenu() {
   displayBanner();
 
   const action = await select({
-    message: "What would you like to do?",
+    message: chalk.hex(colors.lavender)("What would you like to do?"),
     choices: [
       {
-        name: "📂 Create a single example project",
+        name: `📂 ${chalk
+          .hex(colors.blue)
+          .bold("Create")} a single example project`,
         value: "create-example",
         description: "Generate a standalone project with one example",
       },
       {
-        name: "📦 Create a category project",
+        name: `📦 ${chalk
+          .hex(colors.sapphire)
+          .bold("Create")} a category project`,
         value: "create-category",
         description:
           "Generate a project with multiple examples from a category",
       },
       {
-        name: "📚 Generate documentation",
+        name: `📚 ${chalk.hex(colors.mauve).bold("Generate")} documentation`,
         value: "generate-docs",
         description: "Create GitBook documentation for examples",
       },
       {
-        name: "📋 List all examples",
+        name: `📋 ${chalk.hex(colors.teal).bold("List")} all examples`,
         value: "list-examples",
         description: "Show all available examples",
       },
       {
-        name: "❌ Exit",
+        name: `❌ ${chalk.hex(colors.red).bold("Exit")}`,
         value: "exit",
         description: "Exit the CLI",
       },
@@ -87,186 +109,195 @@ async function mainMenu() {
 
 // Create example workflow
 async function createExampleWorkflow() {
-  console.log(chalk.blue("\n📄 Create Single Example Project\n"));
+  console.log(createHeader("📄 Create Single Example Project", colors.sky));
 
-  // Get examples list
   const examples = Object.entries(config.examples).map(
     ([key, value]: [string, any]) => ({
-      name: `${key} - ${value.description}`,
+      name: styledChoice(key, truncateText(value.description, 80)),
       value: key,
-      description: value.description,
+      fullDescription: value.description,
     })
   );
 
-  const exampleName = await select({
-    message: "Select an example:",
-    choices: examples,
+  const exampleName = await search({
+    message: styledPrompt("🔍 Search > :"),
     pageSize: 12,
+    source: async (input) => {
+      const term = (input || "").toLowerCase();
+      return examples.filter(
+        (ex) =>
+          ex.value.toLowerCase().includes(term) ||
+          ex.fullDescription.toLowerCase().includes(term)
+      );
+    },
   });
 
   const outputDir = await input({
-    message: "Output directory:",
-    default: `./output/fhevm-example-${exampleName}`,
+    message: styledPrompt("Output directory:"),
+    default: `./output/${exampleName}`,
   });
 
   const installDeps = await confirm({
-    message: "Install dependencies after creation?",
+    message: styledPrompt("Install dependencies after creation?"),
     default: true,
   });
 
-  // Create the example
-  const spinner = ora("Creating example project...").start();
+  const spinner = createSpinner("Creating example project...");
 
   try {
-    execSync(
+    await execAsync(
       `npx ts-node scripts/create-example.ts ${exampleName} ${outputDir}`,
-      {
-        stdio: "pipe",
-      }
+      { cwd: ROOT_DIR }
     );
-    spinner.succeed(chalk.green("Example project created successfully!"));
+    succeedSpinner(spinner, "Example project created successfully!");
 
     if (installDeps) {
-      const installSpinner = ora("Installing dependencies...").start();
+      const installSpinner = createSpinner("Installing dependencies...");
       try {
-        execSync("npm install", { cwd: outputDir, stdio: "pipe" });
-        installSpinner.succeed(chalk.green("Dependencies installed!"));
+        await execAsync("npm install", { cwd: outputDir });
+        succeedSpinner(installSpinner, "Dependencies installed!");
       } catch (error) {
-        installSpinner.fail(chalk.red("Failed to install dependencies"));
+        failSpinner(installSpinner, "Failed to install dependencies");
       }
     }
 
-    console.log(chalk.cyan("\n✨ Next steps:"));
-    console.log(chalk.white(`  cd ${outputDir}`));
-    if (!installDeps) {
-      console.log(chalk.white("  npm install"));
-    }
-    console.log(chalk.white("  npm run compile"));
-    console.log(chalk.white("  npm run test\n"));
+    const steps = [
+      `cd ${outputDir}`,
+      installDeps ? null : "npm install",
+      "npm run compile",
+      "npm run test",
+    ].filter(Boolean) as string[];
+
+    console.log(createNextStepsBox(steps));
   } catch (error) {
-    spinner.fail(chalk.red("Failed to create example"));
+    failSpinner(spinner, "Failed to create example");
     console.error(error);
   }
 }
 
 // Create category workflow
 async function createCategoryWorkflow() {
-  console.log(chalk.blue("\n📦 Create Category Project\n"));
+  console.log(createHeader("📦 Create Category Project", colors.sapphire));
 
-  // Get categories list
   const categories = Object.entries(config.categories).map(
     ([key, value]: [string, any]) => ({
-      name: `${value.name} (${value.contracts.length} contracts)`,
+      name: `${styledChoice(value.name)} ${theme.dim(
+        `(${value.contracts.length} contracts)`
+      )}`,
       value: key,
-      description: value.description,
     })
   );
 
   const categoryName = await select({
-    message: "Select a category:",
+    message: styledPrompt("Select a category:"),
     choices: categories,
   });
 
   const outputDir = await input({
-    message: "Output directory:",
-    default: `./output/fhevm-examples-${categoryName}`,
+    message: styledPrompt("Output directory:"),
+    default: `./output/${categoryName}`,
   });
 
   const installDeps = await confirm({
-    message: "Install dependencies after creation?",
+    message: styledPrompt("Install dependencies after creation?"),
     default: true,
   });
 
-  // Create the category project
-  const spinner = ora("Creating category project...").start();
+  const spinner = createSpinner("Creating category project...");
 
   try {
-    execSync(
+    await execAsync(
       `npx ts-node scripts/create-category.ts ${categoryName} ${outputDir}`,
-      {
-        stdio: "pipe",
-      }
+      { cwd: ROOT_DIR }
     );
-    spinner.succeed(chalk.green("Category project created successfully!"));
+    succeedSpinner(spinner, "Category project created successfully!");
 
     if (installDeps) {
-      const installSpinner = ora("Installing dependencies...").start();
+      const installSpinner = createSpinner("Installing dependencies...");
       try {
-        execSync("npm install", { cwd: outputDir, stdio: "pipe" });
-        installSpinner.succeed(chalk.green("Dependencies installed!"));
+        await execAsync("npm install", { cwd: outputDir });
+        succeedSpinner(installSpinner, "Dependencies installed!");
       } catch (error) {
-        installSpinner.fail(chalk.red("Failed to install dependencies"));
+        failSpinner(installSpinner, "Failed to install dependencies");
       }
     }
 
-    console.log(chalk.cyan("\n✨ Next steps:"));
-    console.log(chalk.white(`  cd ${outputDir}`));
-    if (!installDeps) {
-      console.log(chalk.white("  npm install"));
-    }
-    console.log(chalk.white("  npm run compile"));
-    console.log(chalk.white("  npm run test\n"));
+    const steps = [
+      `cd ${outputDir}`,
+      installDeps ? null : "npm install",
+      "npm run compile",
+      "npm run test",
+    ].filter(Boolean) as string[];
+
+    console.log(createNextStepsBox(steps));
   } catch (error) {
-    spinner.fail(chalk.red("Failed to create category project"));
+    failSpinner(spinner, "Failed to create category project");
     console.error(error);
   }
 }
 
 // Generate docs workflow
 async function generateDocsWorkflow() {
-  console.log(chalk.blue("\n📚 Generate Documentation\n"));
+  console.log(createHeader("📚 Generate Documentation", colors.mauve));
 
   const choices = [
     {
-      name: "Generate all documentation",
+      name: theme.warning.bold("Generate all documentation"),
       value: "all",
-      description: "Generate docs for all examples",
     },
     ...Object.keys(config.examples).map((key) => ({
-      name: key,
+      name: theme.info(key),
       value: key,
     })),
   ];
 
   const selection = await select({
-    message: "Select documentation to generate:",
+    message: styledPrompt("Select documentation to generate:"),
     choices,
     pageSize: 12,
   });
 
-  const spinner = ora("Generating documentation...").start();
+  const spinner = createSpinner("Generating documentation...");
 
   try {
     if (selection === "all") {
-      execSync("npx ts-node scripts/generate-docs.ts --all", { stdio: "pipe" });
+      await execAsync("npx ts-node scripts/generate-docs.ts --all", {
+        cwd: ROOT_DIR,
+      });
     } else {
-      execSync(`npx ts-node scripts/generate-docs.ts ${selection}`, {
-        stdio: "pipe",
+      await execAsync(`npx ts-node scripts/generate-docs.ts ${selection}`, {
+        cwd: ROOT_DIR,
       });
     }
-    spinner.succeed(chalk.green("Documentation generated successfully!"));
+    succeedSpinner(spinner, "Documentation generated successfully!");
   } catch (error) {
-    spinner.fail(chalk.red("Failed to generate documentation"));
+    failSpinner(spinner, "Failed to generate documentation");
     console.error(error);
   }
 }
 
 // List examples
 function listExamples() {
-  console.log(chalk.blue("\n📋 Available Examples\n"));
+  let output = "";
 
-  console.log(chalk.cyan.bold("Basic Examples:"));
+  output += theme.info.bold("\n📄 Available Examples\n");
   Object.entries(config.examples).forEach(([key, value]: [string, any]) => {
-    console.log(chalk.white(`  • ${chalk.green(key)}`));
-    console.log(chalk.gray(`    ${value.description}\n`));
+    output += `  ${theme.success.bold("•")} ${theme.primary(key)}\n`;
+    output += `    ${theme.dim(truncateText(value.description, 120))}\n\n`;
   });
 
-  console.log(chalk.cyan.bold("\nCategories:"));
+  output += theme.info.bold("📦 Categories\n");
   Object.entries(config.categories).forEach(([key, value]: [string, any]) => {
-    console.log(chalk.white(`  • ${chalk.green(key)} - ${value.name}`));
-    console.log(chalk.gray(`    ${value.description}`));
-    console.log(chalk.gray(`    Contracts: ${value.contracts.length}\n`));
+    output += `  ${theme.success.bold("•")} ${theme.primary(
+      value.name
+    )} ${theme.dim(`(${key})`)}\n`;
+    output += `    ${theme.dim(truncateText(value.description, 120))}\n`;
+    output += `    ${theme.warning.italic("Contracts:")} ${
+      value.contracts.length
+    }\n\n`;
   });
+
+  console.log(createInfoBox(output, "📋 Examples & Categories"));
 }
 
 // Main function
@@ -282,175 +313,196 @@ async function main() {
       subcommand === "-h" ||
       subcommand === "help"
     ) {
-      console.log(chalk.cyan.bold("\n🔐 FHEVM Example Generator CLI\n"));
-      console.log(chalk.white("Usage: npm run cli [command] [options]\n"));
+      const helpText = `
+${chalk.hex(colors.yellow).bold("Usage:")} ${chalk.white(
+        "npm run cli [command] [options]"
+      )}
 
-      console.log(chalk.yellow("Commands:\n"));
-      console.log(chalk.white("  npm run cli"));
-      console.log(chalk.gray("    Launch interactive menu\n"));
+${chalk.hex(colors.mauve).bold("Commands:")}
+  ${chalk.hex(colors.blue)(
+    "npm run cli"
+  )}                             ${chalk.gray("Launch interactive menu")}
+  ${chalk.hex(colors.blue)("npm run cli:create")} ${chalk.hex(colors.green)(
+        "<name> [dir]"
+      )}      ${chalk.gray("Create a single example project")}
+  ${chalk.hex(colors.blue)("npm run cli:category")} ${chalk.hex(colors.green)(
+        "<name> [dir]"
+      )}    ${chalk.gray("Create a category project")}
+  ${chalk.hex(colors.blue)("npm run cli:docs")} ${chalk.hex(colors.green)(
+        "[name|--all]"
+      )}        ${chalk.gray("Generate documentation")}
+  ${chalk.hex(colors.blue)(
+    "npm run cli:list"
+  )}                       ${chalk.gray("List all available examples")}
+  ${chalk.hex(colors.blue)(
+    "npm run cli:scan"
+  )}                       ${chalk.gray("Scan contracts and update config")}
+  ${chalk.hex(colors.blue)(
+    "npm run cli:validate"
+  )}                   ${chalk.gray("Validate examples")}
+  ${chalk.hex(colors.blue)("npm run cli:test")} ${chalk.hex(colors.green)(
+        "[name]"
+      )}             ${chalk.gray("Run tests for examples")}
+
+${chalk.hex(colors.mauve).bold("Options:")}
+  ${chalk.hex(colors.yellow)(
+    "--help, -h"
+  )}                            ${chalk.gray("Show this help message")}
+`;
 
       console.log(
-        chalk.white("  npm run cli:create <example-name> [output-dir]")
+        boxen(helpText, {
+          title: "🔐 FHEVM Example Generator CLI",
+          padding: 1,
+          margin: 1,
+          borderStyle: "round",
+          borderColor: colors.mauve,
+        })
       );
-      console.log(chalk.gray("    Create a single example project"));
-      console.log(
-        chalk.gray("    Example: npm run cli:create fhe-counter ./my-project\n")
-      );
-
-      console.log(
-        chalk.white("  npm run cli:category <category-name> [output-dir]")
-      );
-      console.log(
-        chalk.gray("    Create a category project with multiple examples")
-      );
-      console.log(
-        chalk.gray("    Example: npm run cli:category basic ./my-examples\n")
-      );
-
-      console.log(chalk.white("  npm run cli:docs [example-name|--all]"));
-      console.log(chalk.gray("    Generate documentation"));
-      console.log(chalk.gray("    Example: npm run cli:docs fhe-counter\n"));
-
-      console.log(chalk.white("  npm run cli:list"));
-      console.log(
-        chalk.gray("    List all available examples and categories\n")
-      );
-
-      console.log(chalk.white("  npm run cli:scan"));
-      console.log(
-        chalk.gray("    Scan contracts and update config automatically\n")
-      );
-
-      console.log(chalk.white("  npm run cli:validate"));
-      console.log(chalk.gray("    Validate examples (coming soon)\n"));
-
-      console.log(chalk.yellow("Options:\n"));
-      console.log(chalk.white("  --help, -h    Show this help message\n"));
 
       process.exit(0);
     }
 
     // Handle subcommands with non-interactive mode
     if (subcommand === "create") {
-      // Non-interactive: npm run cli-create <example-name> <output-dir>
       const exampleName = args[1];
       const outputDir = args[2];
 
       if (!exampleName) {
-        console.log(chalk.red("\n❌ Error: Example name required"));
-        console.log(
-          chalk.yellow(
-            "Usage: npm run cli-create <example-name> [output-dir]\n"
-          )
-        );
-        console.log(chalk.cyan("Available examples:"));
-        Object.keys(config.examples).forEach((key) => {
-          console.log(chalk.white(`  • ${key}`));
-        });
-        console.log();
+        console.log(chalk.hex(colors.red)("\n❌ Error: Example name required"));
+        listExamples();
         process.exit(1);
       }
 
       const finalOutputDir =
         outputDir || `./output/fhevm-example-${exampleName}`;
 
-      const spinner = ora("Creating example project...").start();
+      const spinner = ora({
+        text: chalk.hex(colors.blue)("Creating example project..."),
+        color: "blue",
+      }).start();
       try {
-        execSync(
+        await execAsync(
           `npx ts-node scripts/create-example.ts ${exampleName} ${finalOutputDir}`,
-          { stdio: "pipe" }
+          { cwd: ROOT_DIR }
         );
-        spinner.succeed(chalk.green("Example project created successfully!"));
+        spinner.succeed(
+          successGradient("Example project created successfully!")
+        );
 
-        console.log(chalk.cyan("\n✨ Next steps:"));
-        console.log(chalk.white(`  cd ${finalOutputDir}`));
-        console.log(chalk.white("  npm install"));
-        console.log(chalk.white("  npm run compile"));
-        console.log(chalk.white("  npm run test\n"));
+        const nextSteps = [
+          `cd ${finalOutputDir}`,
+          "npm install",
+          "npm run compile",
+          "npm run test",
+        ]
+          .map((step) => chalk.hex(colors.yellow)(`  $ ${step}`))
+          .join("\n");
+
+        console.log(
+          boxen(nextSteps, {
+            title: "✨ Next Steps",
+            padding: 1,
+            margin: { top: 1, bottom: 1 },
+            borderStyle: "round",
+            borderColor: colors.peach,
+          })
+        );
       } catch (error) {
-        spinner.fail(chalk.red("Failed to create example"));
+        spinner.fail(chalk.hex(colors.red)("Failed to create example"));
         process.exit(1);
       }
       process.exit(0);
     } else if (subcommand === "category") {
-      // Non-interactive: npm run cli-category <category-name> <output-dir>
       const categoryName = args[1];
       const outputDir = args[2];
 
       if (!categoryName) {
-        console.log(chalk.red("\n❌ Error: Category name required"));
         console.log(
-          chalk.yellow(
-            "Usage: npm run cli-category <category-name> [output-dir]\n"
-          )
+          chalk.hex(colors.red)("\n❌ Error: Category name required")
         );
-        console.log(chalk.cyan("Available categories:"));
-        Object.entries(config.categories).forEach(
-          ([key, value]: [string, any]) => {
-            console.log(
-              chalk.white(
-                `  • ${key} - ${value.name} (${value.contracts.length} contracts)`
-              )
-            );
-          }
-        );
-        console.log();
+        listExamples();
         process.exit(1);
       }
 
       const finalOutputDir =
         outputDir || `./output/fhevm-examples-${categoryName}`;
 
-      const spinner = ora("Creating category project...").start();
+      const spinner = ora({
+        text: chalk.hex(colors.blue)("Creating category project..."),
+        color: "blue",
+      }).start();
       try {
-        execSync(
+        await execAsync(
           `npx ts-node scripts/create-category.ts ${categoryName} ${finalOutputDir}`,
-          { stdio: "pipe" }
+          { cwd: ROOT_DIR }
         );
-        spinner.succeed(chalk.green("Category project created successfully!"));
+        spinner.succeed(
+          successGradient("Category project created successfully!")
+        );
 
-        console.log(chalk.cyan("\n✨ Next steps:"));
-        console.log(chalk.white(`  cd ${finalOutputDir}`));
-        console.log(chalk.white("  npm install"));
-        console.log(chalk.white("  npm run compile"));
-        console.log(chalk.white("  npm run test\n"));
+        const nextSteps = [
+          `cd ${finalOutputDir}`,
+          "npm install",
+          "npm run compile",
+          "npm run test",
+        ]
+          .map((step) => chalk.hex(colors.yellow)(`  $ ${step}`))
+          .join("\n");
+
+        console.log(
+          boxen(nextSteps, {
+            title: "✨ Next Steps",
+            padding: 1,
+            margin: { top: 1, bottom: 1 },
+            borderStyle: "round",
+            borderColor: colors.peach,
+          })
+        );
       } catch (error) {
-        spinner.fail(chalk.red("Failed to create category project"));
+        spinner.fail(
+          chalk.hex(colors.red)("Failed to create category project")
+        );
         process.exit(1);
       }
       process.exit(0);
     } else if (subcommand === "docs") {
-      // Non-interactive: npm run cli-docs [example-name|--all]
       const target = args[1] || "--all";
 
-      const spinner = ora("Generating documentation...").start();
+      const spinner = ora({
+        text: chalk.hex(colors.blue)("Generating documentation..."),
+        color: "blue",
+      }).start();
       try {
         if (target === "--all") {
-          execSync("npx ts-node scripts/generate-docs.ts --all", {
-            stdio: "inherit",
+          await execAsync("npx ts-node scripts/generate-docs.ts --all", {
+            cwd: ROOT_DIR,
           });
         } else {
-          execSync(`npx ts-node scripts/generate-docs.ts ${target}`, {
-            stdio: "inherit",
+          await execAsync(`npx ts-node scripts/generate-docs.ts ${target}`, {
+            cwd: ROOT_DIR,
           });
         }
         spinner.stop();
         console.log(
-          chalk.green("\n✅ Documentation generated successfully!\n")
+          successGradient("\n✅ Documentation generated successfully!\n")
         );
       } catch (error) {
-        spinner.fail(chalk.red("Failed to generate documentation"));
+        spinner.fail(chalk.hex(colors.red)("Failed to generate documentation"));
         process.exit(1);
       }
       process.exit(0);
     } else if (subcommand === "scan") {
-      // Run scan script
-      const spinner = ora("Scanning contracts and tests...").start();
+      const spinner = ora({
+        text: chalk.hex(colors.blue)("Scanning contracts and tests..."),
+        color: "blue",
+      }).start();
       try {
-        execSync("npx ts-node scripts/scan.ts", { stdio: "inherit" });
+        await execAsync("npx ts-node scripts/scan.ts", { cwd: ROOT_DIR });
         spinner.stop();
+        console.log(successGradient("\n✅ Scan completed!\n"));
       } catch (error) {
-        spinner.fail(chalk.red("Scan failed"));
+        spinner.fail(chalk.hex(colors.red)("Scan failed"));
         process.exit(1);
       }
       process.exit(0);
@@ -458,17 +510,20 @@ async function main() {
       listExamples();
       process.exit(0);
     } else if (subcommand === "validate") {
-      const spinner = ora("Validating project...").start();
+      const spinner = ora({
+        text: chalk.hex(colors.blue)("Validating project..."),
+        color: "blue",
+      }).start();
       try {
-        execSync("npx ts-node scripts/validate.ts", { stdio: "inherit" });
+        await execAsync("npx ts-node scripts/validate.ts", { cwd: ROOT_DIR });
         spinner.stop();
+        console.log(successGradient("\n✅ Validation completed!\n"));
       } catch (error) {
-        spinner.fail(chalk.red("Validation failed"));
+        spinner.fail(chalk.hex(colors.red)("Validation failed"));
         process.exit(1);
       }
       process.exit(0);
     } else if (subcommand === "test") {
-      // Test subcommand: npm run cli:test [example-name | --list]
       const arg = args[1] || "";
       try {
         if (arg) {

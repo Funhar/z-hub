@@ -10,31 +10,19 @@
 
 import * as fs from "fs";
 import * as path from "path";
-
-// Color codes for terminal output
-enum Color {
-  Reset = "\x1b[0m",
-  Green = "\x1b[32m",
-  Blue = "\x1b[34m",
-  Yellow = "\x1b[33m",
-  Red = "\x1b[31m",
-  Cyan = "\x1b[36m",
-}
-
-function log(message: string, color: Color = Color.Reset): void {
-  console.log(`${color}${message}${Color.Reset}`);
-}
-
-function success(message: string): void {
-  log(`✅ ${message}`, Color.Green);
-}
+import {
+  createInfoBox,
+  createResultBox,
+  theme,
+  zamaGradient,
+} from "./utils/theme";
 
 function info(message: string): void {
-  log(`ℹ️  ${message}`, Color.Blue);
+  console.log(theme.info(`ℹ️  ${message}`));
 }
 
 function error(message: string): never {
-  log(`❌ Error: ${message}`, Color.Red);
+  console.log(theme.error(`❌ Error: ${message}`));
   process.exit(1);
 }
 
@@ -145,7 +133,7 @@ function updateSummary(exampleName: string, config: DocsConfig): void {
   const summaryPath = path.join(process.cwd(), "docs", "SUMMARY.md");
 
   if (!fs.existsSync(summaryPath)) {
-    log("Creating new SUMMARY.md", Color.Yellow);
+    console.log(theme.warning("Creating new SUMMARY.md"));
     const summary = `## Basic\n\n`;
     fs.writeFileSync(summaryPath, summary);
   }
@@ -189,7 +177,7 @@ function updateSummary(exampleName: string, config: DocsConfig): void {
   }
 
   fs.writeFileSync(summaryPath, updatedSummary);
-  success("Updated SUMMARY.md");
+  console.log(theme.success("Updated SUMMARY.md"));
 }
 
 function generateDocs(
@@ -230,16 +218,22 @@ function generateDocs(
   }
 
   fs.writeFileSync(outputPath, markdown);
-  success(`Documentation generated: ${config.output}`);
+  console.log(theme.success(`Documentation generated: ${config.output}`));
 
   // Update SUMMARY.md
   if (!options.noSummary) {
     updateSummary(exampleName, config);
   }
 
-  log("\n" + "=".repeat(60), Color.Green);
-  success(`Documentation for "${config.title}" generated successfully!`);
-  log("=".repeat(60), Color.Green);
+  console.log(
+    createResultBox(
+      theme.success(
+        `Documentation for "${config.title}" generated successfully!`
+      ),
+      "✅ Success",
+      false
+    )
+  );
 }
 
 function generateAllDocs(): void {
@@ -254,9 +248,10 @@ function generateAllDocs(): void {
       successCount++;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : String(err);
-      log(
-        `Failed to generate docs for ${exampleName}: ${errorMessage}`,
-        Color.Red
+      console.log(
+        theme.error(
+          `Failed to generate docs for ${exampleName}: ${errorMessage}`
+        )
       );
       errorCount++;
     }
@@ -269,12 +264,16 @@ function generateAllDocs(): void {
     updateSummary(exampleName, config);
   }
 
-  log("\n" + "=".repeat(60), Color.Green);
-  success(`Generated ${successCount} documentation files`);
-  if (errorCount > 0) {
-    log(`Failed: ${errorCount}`, Color.Red);
-  }
-  log("=".repeat(60), Color.Green);
+  const finalOutput = [
+    `Generated: ${theme.success(successCount)} documentation files`,
+    errorCount > 0 ? `Failed:    ${theme.error(errorCount)}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  console.log(
+    createResultBox(finalOutput, "📚 Docs Generation Result", errorCount > 0)
+  );
 }
 
 // Main execution
@@ -282,18 +281,18 @@ function main(): void {
   const args = process.argv.slice(2);
 
   if (args.length === 0 || args[0] === "--help" || args[0] === "-h") {
-    log("FHEVM Documentation Generator", Color.Cyan);
-    log("\nUsage: ts-node scripts/generate-docs.ts <example-name> | --all\n");
-    log("Available examples:", Color.Yellow);
+    console.log(zamaGradient("\n📚 FHEVM Documentation Generator\n"));
+
+    let helpText = `${theme.dim("Usage: npm run cli:docs [name|--all]")}\n\n`;
+    helpText += `${theme.primary.bold("Available examples:")}\n`;
+
     Object.entries(EXAMPLES_CONFIG).forEach(([name, config]) => {
-      log(`  ${name}`, Color.Green);
-      log(`    ${config.title} - ${config.category}`, Color.Reset);
+      helpText += `  ${theme.success("•")} ${theme.bold(name)} ${theme.dim(
+        `(${config.category})`
+      )}\n`;
     });
-    log("\nOptions:", Color.Yellow);
-    log("  --all    Generate documentation for all examples");
-    log("\nExamples:", Color.Yellow);
-    log("  ts-node scripts/generate-docs.ts fhe-counter");
-    log("  ts-node scripts/generate-docs.ts --all\n");
+
+    console.log(createInfoBox(helpText, "📚 Help"));
     process.exit(0);
   }
 

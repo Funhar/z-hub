@@ -76,23 +76,23 @@
       "description": "Sealed-bid auction where all bids are submitted as encrypted FHE values. The winner is determined privately on-chain, ensuring no participant can see others' bids."
     },
     "access-control": {
-      "contract": "contracts/basic/deep-dive/AccessControl.sol",
-      "test": "test/basic/deep-dive/AccessControl.ts",
+      "contract": "contracts/deep-dive/AccessControl.sol",
+      "test": "test/deep-dive/AccessControl.ts",
       "description": "Master FHEVM access control using FHE.allow and allowTransient. Essential for managing who can compute on handles, ensuring private data never leaks to unauthorized users."
     },
     "anti-patterns": {
-      "contract": "contracts/basic/deep-dive/AntiPatterns.sol",
-      "test": "test/basic/deep-dive/AntiPatterns.ts",
+      "contract": "contracts/deep-dive/AntiPatterns.sol",
+      "test": "test/deep-dive/AntiPatterns.ts",
       "description": "Avoid security and performance mistakes by studying common FHEVM anti-patterns. Learn about side-channel leaks and gas-intensive operations to build robust contracts."
     },
     "handle-lifecycle": {
-      "contract": "contracts/basic/deep-dive/HandleLifecycle.sol",
-      "test": "test/basic/deep-dive/HandleLifecycle.ts",
+      "contract": "contracts/deep-dive/HandleLifecycle.sol",
+      "test": "test/deep-dive/HandleLifecycle.ts",
       "description": "Deep dive into FHE handle lifecycles, from creation to storage and derivation. Understand how handles point to encrypted data and how to manage them effectively."
     },
     "input-proofs": {
-      "contract": "contracts/basic/deep-dive/InputProofs.sol",
-      "test": "test/basic/deep-dive/InputProofs.ts",
+      "contract": "contracts/deep-dive/InputProofs.sol",
+      "test": "test/deep-dive/InputProofs.ts",
       "description": "Verify encrypted input integrity using cryptographic proofs. explains why input proofs are vital for preventing malicious data injection and ensuring data validity."
     },
     "fhe-eq": {
@@ -183,22 +183,6 @@
           "test": "test/basic/fhe-operations/FHEIfThenElse.ts"
         },
         {
-          "path": "contracts/basic/deep-dive/AccessControl.sol",
-          "test": "test/basic/deep-dive/AccessControl.ts"
-        },
-        {
-          "path": "contracts/basic/deep-dive/AntiPatterns.sol",
-          "test": "test/basic/deep-dive/AntiPatterns.ts"
-        },
-        {
-          "path": "contracts/basic/deep-dive/HandleLifecycle.sol",
-          "test": "test/basic/deep-dive/HandleLifecycle.ts"
-        },
-        {
-          "path": "contracts/basic/deep-dive/InputProofs.sol",
-          "test": "test/basic/deep-dive/InputProofs.ts"
-        },
-        {
           "path": "contracts/basic/fhe-operations/FHEEq.sol",
           "test": "test/basic/fhe-operations/FHEEq.ts"
         },
@@ -208,10 +192,27 @@
         }
       ]
     },
-    "auctions": {
-      "name": "Auction Examples",
-      "description": "Build fair and trustless auctions using FHE. Learn how to manage sealed bids and determine winners privately on-chain, ensuring that participation remains confidential.",
-      "contracts": []
+    "deep-dive": {
+      "name": "Deep Dive Examples",
+      "description": "Explore advanced FHEVM concepts and patterns. This category covers complex use cases like access control, anti-patterns, and lifecycle management for building private smart contracts.",
+      "contracts": [
+        {
+          "path": "contracts/deep-dive/AccessControl.sol",
+          "test": "test/deep-dive/AccessControl.ts"
+        },
+        {
+          "path": "contracts/deep-dive/AntiPatterns.sol",
+          "test": "test/deep-dive/AntiPatterns.ts"
+        },
+        {
+          "path": "contracts/deep-dive/HandleLifecycle.sol",
+          "test": "test/deep-dive/HandleLifecycle.ts"
+        },
+        {
+          "path": "contracts/deep-dive/InputProofs.sol",
+          "test": "test/deep-dive/InputProofs.ts"
+        }
+      ]
     },
     "openzeppelin": {
       "name": "OpenZeppelin Confidential Contracts",
@@ -241,11 +242,6 @@
       "additionalDeps": {
         "@openzeppelin/confidential-contracts": "^0.1.0"
       }
-    },
-    "games": {
-      "name": "Game Examples",
-      "description": "Create immersive and private gaming experiences on-chain. Implement hidden game states, private randomness, and secret moves using FHEVM to ensure fair play without revealing data.",
-      "contracts": []
     },
     "advanced": {
       "name": "Advanced Examples",

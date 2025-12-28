@@ -8,7 +8,12 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import chalk from "chalk";
+import {
+  theme,
+  zamaGradient,
+  createResultBox,
+  createWarningBox,
+} from "./utils/theme";
 
 interface ExampleConfig {
   contract: string;
@@ -163,7 +168,7 @@ function scanExamples(): void {
   const rootDir = path.resolve(__dirname, "..");
   const configPath = path.join(rootDir, "examples-config.json");
 
-  console.log(chalk.cyan.bold("\n🔍 Scanning for contracts and tests...\n"));
+  console.log(zamaGradient("\n🔍 Scanning for contracts and tests...\n"));
 
   // Load existing config
   let config: Config;
@@ -172,7 +177,7 @@ function scanExamples(): void {
     config = JSON.parse(configContent);
   } catch {
     console.log(
-      chalk.yellow("⚠️  examples-config.json not found, creating new one...")
+      theme.warning("⚠️  examples-config.json not found, creating new one...")
     );
     config = { examples: {}, categories: {}, docs: {} };
   }
@@ -181,7 +186,7 @@ function scanExamples(): void {
   const contractsDir = path.join(rootDir, "contracts");
   const contractFiles = findSolFiles(contractsDir, rootDir);
 
-  console.log(chalk.blue(`Found ${contractFiles.length} contract files\n`));
+  console.log(theme.info(`Found ${contractFiles.length} contract files\n`));
 
   let newCount = 0;
   let updatedCount = 0;
@@ -192,7 +197,9 @@ function scanExamples(): void {
     const contractName = getContractName(path.join(rootDir, contractPath));
     if (!contractName) {
       console.log(
-        chalk.yellow(`⚠️  Could not extract contract name from ${contractPath}`)
+        theme.warning(
+          `⚠️  Could not extract contract name from ${contractPath}`
+        )
       );
       continue;
     }
@@ -202,7 +209,7 @@ function scanExamples(): void {
 
     if (!testPath) {
       console.log(
-        chalk.red(`❌ No test found for ${contractName} (${contractPath})`)
+        theme.error(`❌ No test found for ${contractName} (${contractPath})`)
       );
       missingTests++;
       continue;
@@ -244,7 +251,7 @@ function scanExamples(): void {
 
       if (changed) {
         updatedCount++;
-        console.log(chalk.yellow(`📝 Updated: ${exampleKey}`));
+        console.log(theme.warning(`📝 Updated: ${exampleKey}`));
       }
 
       // Check if description is empty
@@ -265,7 +272,7 @@ function scanExamples(): void {
 
       newCount++;
       needsDescription.push(exampleKey);
-      console.log(chalk.green(`✅ Added: ${exampleKey}`));
+      console.log(theme.success(`✅ Added: ${exampleKey}`));
 
       // Auto-add to category if detected
       const category = detectCategory(contractPath);
@@ -296,7 +303,7 @@ function scanExamples(): void {
 
           categoryContracts.push(contractEntry);
           config.categories[category].contracts = categoryContracts;
-          console.log(chalk.blue(`  → Added to category: ${category}`));
+          console.log(theme.info(`  → Added to category: ${category}`));
         }
       }
 
@@ -307,7 +314,7 @@ function scanExamples(): void {
           contractName,
           contractPath
         );
-        console.log(chalk.blue(`  → Generated docs config`));
+        console.log(theme.info(`  → Generated docs config`));
       }
     }
   }
@@ -316,31 +323,21 @@ function scanExamples(): void {
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n");
 
   // Summary
-  console.log(chalk.cyan.bold("\n" + "=".repeat(60)));
-  console.log(chalk.cyan.bold("Scan Complete!"));
-  console.log(chalk.cyan.bold("=".repeat(60) + "\n"));
+  const summary = [
+    `Total contracts: ${theme.bold(contractFiles.length)}`,
+    `New examples:    ${theme.success(newCount)}`,
+    `Updated:         ${theme.warning(updatedCount)}`,
+    `Missing tests:   ${theme.error(missingTests)}`,
+  ].join("\n");
 
-  console.log(chalk.white(`Total contracts: ${contractFiles.length}`));
-  console.log(chalk.green(`✅ New examples added: ${newCount}`));
-  console.log(chalk.yellow(`📝 Examples updated: ${updatedCount}`));
-  console.log(chalk.red(`❌ Missing tests: ${missingTests}`));
+  console.log(createResultBox(summary, "🔎 Scan Results", missingTests > 0));
 
-  // Warn about missing descriptions
   if (needsDescription.length > 0) {
-    console.log(chalk.yellow.bold("\n⚠️  Examples needing descriptions:\n"));
-    needsDescription.forEach((key) => {
-      console.log(chalk.yellow(`  • ${key}`));
-    });
-    console.log(
-      chalk.white(
-        "\nPlease edit examples-config.json and add descriptions for these examples.\n"
-      )
-    );
+    console.log(createWarningBox(needsDescription, "⚠️ Missing Descriptions"));
   } else {
-    console.log(chalk.green("\n✅ All examples have descriptions!\n"));
+    console.log(theme.success("\n✅ All examples have descriptions!\n"));
   }
 
-  // Check categories for missing name/description
   const categoriesNeedingInfo: string[] = [];
   for (const [catKey, catValue] of Object.entries(config.categories)) {
     const cat = catValue as any;
@@ -356,15 +353,7 @@ function scanExamples(): void {
 
   if (categoriesNeedingInfo.length > 0) {
     console.log(
-      chalk.yellow.bold("⚠️  Categories needing name/description:\n")
-    );
-    categoriesNeedingInfo.forEach((key) => {
-      console.log(chalk.yellow(`  • ${key}`));
-    });
-    console.log(
-      chalk.white(
-        "\nPlease edit examples-config.json and add name/description for these categories.\n"
-      )
+      createWarningBox(categoriesNeedingInfo, "⚠️ Categories Needing Info")
     );
   }
 }

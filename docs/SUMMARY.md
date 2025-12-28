@@ -16,7 +16,8 @@
   - [User Decrypt Multiple Values](fhe-user-decrypt-multiple-values.md)
   - [Public Decrypt Single Value](public-decrypt-single-value.md)
   - [Public Decrypt Multiple Values](public-decrypt-multiple-values.md)
-- Deep Dive
+
+## Deep Dive
   - [Access Control](access-control.md)
   - [Input Proofs](input-proofs.md)
   - [Handle Lifecycle](handle-lifecycle.md)
