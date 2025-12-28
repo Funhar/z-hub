@@ -42,9 +42,14 @@ npm run cli:docs [example-name|--all]
 npm run cli:docs fhe-counter
 npm run cli:docs --all
 
+# Scan contracts and auto-update config
+npm run cli:scan
+
 # List all examples
 npm run cli:list
 ```
+
+**Note:** After adding new contracts/tests, run `npm run cli:scan` to automatically update `examples-config.json`.
 
 ## Project Structure
 

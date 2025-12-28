@@ -316,6 +316,11 @@ async function main() {
         chalk.gray("    List all available examples and categories\n")
       );
 
+      console.log(chalk.white("  npm run cli:scan"));
+      console.log(
+        chalk.gray("    Scan contracts and update config automatically\n")
+      );
+
       console.log(chalk.white("  npm run cli:validate"));
       console.log(chalk.gray("    Validate examples (coming soon)\n"));
 
@@ -435,6 +440,17 @@ async function main() {
         );
       } catch (error) {
         spinner.fail(chalk.red("Failed to generate documentation"));
+        process.exit(1);
+      }
+      process.exit(0);
+    } else if (subcommand === "scan") {
+      // Run scan script
+      const spinner = ora("Scanning contracts and tests...").start();
+      try {
+        execSync("npx ts-node scripts/scan.ts", { stdio: "inherit" });
+        spinner.stop();
+      } catch (error) {
+        spinner.fail(chalk.red("Scan failed"));
         process.exit(1);
       }
       process.exit(0);

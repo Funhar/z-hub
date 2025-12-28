@@ -61,6 +61,16 @@
       "test": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.test.ts",
       "testFixture": "test/openzeppelin-confidential-contracts/confidentialToken/confToken.fixture.ts",
       "description": "ERC7984 confidential token standard implementation"
+    },
+    "highest-die-roll": {
+      "contract": "contracts/basic/decrypt/PublicDecryptMultipleValues.sol",
+      "test": "test/basic/decrypt/PublicDecryptMultipleValues.ts",
+      "description": ""
+    },
+    "heads-or-tails": {
+      "contract": "contracts/basic/decrypt/PublicDecryptSingleValue.sol",
+      "test": "test/basic/decrypt/PublicDecryptSingleValue.ts",
+      "description": ""
     }
   },
   "categories": {

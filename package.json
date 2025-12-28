@@ -8,6 +8,7 @@
     "cli:category": "npx ts-node scripts/cli.ts category",
     "cli:docs": "npx ts-node scripts/cli.ts docs",
     "cli:list": "npx ts-node scripts/cli.ts list",
+    "cli:scan": "npx ts-node scripts/cli.ts scan",
     "cli:validate": "npx ts-node scripts/cli.ts validate",
     "help": "npx ts-node scripts/cli.ts --help"
   },
