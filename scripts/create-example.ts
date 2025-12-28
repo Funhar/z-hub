@@ -1,11 +1,11 @@
 #!/usr/bin/env ts-node
 
 /**
- * create-fhevm-example - CLI tool to generate standalone FHEVM example repositories
+ * create-example - CLI tool to generate standalone FHEVM example repositories
  *
- * Usage: ts-node scripts/create-fhevm-example.ts <example-name> [output-dir]
+ * Usage: ts-node scripts/create-example.ts <example-name> [output-dir]
  *
- * Example: ts-node scripts/create-fhevm-example.ts fhe-counter ./my-fhe-counter
+ * Example: ts-node scripts/create-example.ts fhe-counter ./my-fhe-counter
  */
 
 import * as fs from "fs";
@@ -351,7 +351,7 @@ function main(): void {
   if (args.length === 0 || args[0] === "--help" || args[0] === "-h") {
     log("FHEVM Example Generator", Color.Cyan);
     log(
-      "\nUsage: ts-node scripts/create-fhevm-example.ts <example-name> [output-dir]\n"
+      "\nUsage: ts-node scripts/create-example.ts <example-name> [output-dir]\n"
     );
     log("Available examples:", Color.Yellow);
     Object.entries(EXAMPLES_MAP).forEach(([name, info]) => {
@@ -359,9 +359,7 @@ function main(): void {
       log(`    ${info.description}`, Color.Reset);
     });
     log("\nExample:", Color.Yellow);
-    log(
-      "  ts-node scripts/create-fhevm-example.ts fhe-counter ./my-fhe-counter\n"
-    );
+    log("  ts-node scripts/create-example.ts fhe-counter ./my-fhe-counter\n");
     process.exit(0);
   }
 

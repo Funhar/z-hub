@@ -4,13 +4,13 @@ This directory contains automation scripts for generating standalone FHEVM examp
 
 ## Scripts Overview
 
-### 1. `create-fhevm-example.js` - Single Example Generator
+### 1. `create-example.js` - Single Example Generator
 
 Generates a complete, standalone FHEVM example repository from the base template.
 
 **Usage:**
 ```bash
-ts-node scripts/create-fhevm-example.ts <example-name> [output-dir]
+ts-node scripts/create-example.ts <example-name> [output-dir]
 ```
 
 **Features:**
@@ -39,7 +39,7 @@ ts-node scripts/create-fhevm-example.ts <example-name> [output-dir]
 **Example:**
 ```bash
 # Generate fhe-counter example
-ts-node scripts/create-fhevm-example.ts fhe-counter ./output/fhe-counter-example
+ts-node scripts/create-example.ts fhe-counter ./output/fhe-counter-example
 
 # Navigate to generated example
 cd output/fhe-counter-example
@@ -50,13 +50,13 @@ npm run compile
 npm run test
 ```
 
-### 2. `create-fhevm-category.js` - Category Project Generator
+### 2. `create-category.js` - Category Project Generator
 
 Generates a project containing all examples from a specific category.
 
 **Usage:**
 ```bash
-ts-node scripts/create-fhevm-category.ts <category> [output-dir]
+ts-node scripts/create-category.ts <category> [output-dir]
 ```
 
 **Features:**
@@ -75,7 +75,7 @@ ts-node scripts/create-fhevm-category.ts <category> [output-dir]
 **Example:**
 ```bash
 # Generate basic examples project
-ts-node scripts/create-fhevm-category.ts basic ./output/basic-examples
+ts-node scripts/create-category.ts basic ./output/basic-examples
 
 # Navigate and test
 cd output/basic-examples
@@ -139,7 +139,7 @@ The generator creates GitBook-compatible markdown files in `examples/` with:
    ```
 
 3. **Add to script configurations**
-   - Update `EXAMPLES_MAP` in `create-fhevm-example.ts`
+   - Update `EXAMPLES_MAP` in `create-example.ts`
    - Update `EXAMPLES_CONFIG` in `generate-docs.ts`
 
 4. **Generate documentation**
@@ -149,7 +149,7 @@ The generator creates GitBook-compatible markdown files in `examples/` with:
 
 5. **Create standalone repo**
    ```bash
-   ts-node scripts/create-fhevm-example.ts my-example ./output/my-example
+   ts-node scripts/create-example.ts my-example ./output/my-example
    ```
 
 ### Testing Generated Examples
@@ -168,8 +168,8 @@ npm run lint
 ```
 scripts/
 ├── README.md                    # This file
-├── create-fhevm-example.ts     # Repository generator (TypeScript)
-├── create-fhevm-category.ts    # Category project generator (TypeScript)
+├── create-example.ts     # Repository generator (TypeScript)
+├── create-category.ts    # Category project generator (TypeScript)
 └── generate-docs.ts            # Documentation generator (TypeScript)
 ```
 
@@ -179,7 +179,7 @@ scripts/
 
 All scripts use TypeScript configuration objects that map example names to their source files:
 
-**create-fhevm-example.ts:**
+**create-example.ts:**
 ```typescript
 interface ExampleConfig {
   contract: string;

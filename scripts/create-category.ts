@@ -1,11 +1,11 @@
 #!/usr/bin/env ts-node
 
 /**
- * create-fhevm-category - CLI tool to generate FHEVM projects with multiple examples from a category
+ * create-category - CLI tool to generate FHEVM projects with multiple examples from a category
  *
- * Usage: ts-node scripts/create-fhevm-category.ts <category> [output-dir]
+ * Usage: ts-node scripts/create-category.ts <category> [output-dir]
  *
- * Example: ts-node scripts/create-fhevm-category.ts basic ./output/fhevm-basic-examples
+ * Example: ts-node scripts/create-category.ts basic ./output/fhevm-basic-examples
  */
 
 import * as fs from "fs";
@@ -426,7 +426,7 @@ function main(): void {
   if (args.length === 0 || args[0] === "--help" || args[0] === "-h") {
     log("FHEVM Category Project Generator", Color.Cyan);
     log(
-      "\nUsage: ts-node scripts/create-fhevm-category.ts <category> [output-dir]\n"
+      "\nUsage: ts-node scripts/create-category.ts <category> [output-dir]\n"
     );
     log("Available categories:", Color.Yellow);
     Object.entries(CATEGORIES).forEach(([key, info]) => {
@@ -436,11 +436,9 @@ function main(): void {
       log(`    Contracts: ${info.contracts.length}`, Color.Blue);
     });
     log("\nExamples:", Color.Yellow);
+    log("  ts-node scripts/create-category.ts basic ./output/basic-examples");
     log(
-      "  ts-node scripts/create-fhevm-category.ts basic ./output/basic-examples"
-    );
-    log(
-      "  ts-node scripts/create-fhevm-category.ts auctions ./output/auction-examples\n"
+      "  ts-node scripts/create-category.ts auctions ./output/auction-examples\n"
     );
     process.exit(0);
   }

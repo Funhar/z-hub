@@ -119,7 +119,7 @@ async function createExampleWorkflow() {
 
   try {
     execSync(
-      `npx ts-node scripts/create-fhevm-example.ts ${exampleName} ${outputDir}`,
+      `npx ts-node scripts/create-example.ts ${exampleName} ${outputDir}`,
       {
         stdio: "pipe",
       }
@@ -182,7 +182,7 @@ async function createCategoryWorkflow() {
 
   try {
     execSync(
-      `npx ts-node scripts/create-fhevm-category.ts ${categoryName} ${outputDir}`,
+      `npx ts-node scripts/create-category.ts ${categoryName} ${outputDir}`,
       {
         stdio: "pipe",
       }
@@ -357,7 +357,7 @@ async function main() {
       const spinner = ora("Creating example project...").start();
       try {
         execSync(
-          `npx ts-node scripts/create-fhevm-example.ts ${exampleName} ${finalOutputDir}`,
+          `npx ts-node scripts/create-example.ts ${exampleName} ${finalOutputDir}`,
           { stdio: "pipe" }
         );
         spinner.succeed(chalk.green("Example project created successfully!"));
@@ -404,7 +404,7 @@ async function main() {
       const spinner = ora("Creating category project...").start();
       try {
         execSync(
-          `npx ts-node scripts/create-fhevm-category.ts ${categoryName} ${finalOutputDir}`,
+          `npx ts-node scripts/create-category.ts ${categoryName} ${finalOutputDir}`,
           { stdio: "pipe" }
         );
         spinner.succeed(chalk.green("Category project created successfully!"));

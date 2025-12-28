@@ -1,4 +1,4 @@
-# FHEVM Examples Generator
+# Z-Hub FHEVM Examples Generator
 
 A comprehensive system for creating standalone FHEVM (Fully Homomorphic Encryption Virtual Machine) example repositories with automated documentation generation.
 
@@ -104,8 +104,8 @@ z-hub/
 ├── scripts/                # CLI and automation tools
 │   ├── cli.ts              # Main CLI interface
 │   ├── scan.ts             # Auto-discovery tool
-│   ├── create-fhevm-example.ts
-│   ├── create-fhevm-category.ts
+│   ├── create-example.ts
+│   ├── create-category.ts
 │   └── generate-docs.ts
 │
 ├── examples-config.json    # Central configuration
