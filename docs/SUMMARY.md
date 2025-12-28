@@ -1,3 +1,5 @@
+- [Home](README.md)
+
 ## Basic
 
 - [FHE counter](fhe-counter.md)

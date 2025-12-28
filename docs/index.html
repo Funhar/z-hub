@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Z-Hub - FHEVM Examples Documentation</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="A comprehensive system for building privacy-preserving smart contracts using FHEVM by Zama.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Docsify Themeable Layout (Simple Dark) -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+
+  <!-- Catppuccin Mocha Yellow Colors -->
+  <link rel="stylesheet" href="https://docsify.catppuccin.com/mocha/yellow.css" />
+
+  <style>
+    :root {
+      --base-font-family: 'Inter', sans-serif;
+      --code-font-family: 'Roboto Mono', monospace;
+      --code-font-size: 0.85rem;
+
+      /* Content Max Width */
+      --content-max-width: 900px;
+
+      /* Side panel width */
+      --sidebar-width: 280px;
+
+      /* docsify-tabs Mocha Yellow Overrides */
+      --docsifytabs-border-color: #313244; /* Mocha Surface0 */
+      --docsifytabs-tab-background: #181825; /* Mocha Mantle */
+      --docsifytabs-tab-color: #9399b2; /* Mocha Overlay2 (Inactive text) */
+      --docsifytabs-tab-color--active: #f9e2af; /* Mocha Yellow */
+      --docsifytabs-tab-highlight-color: #f9e2af;
+      --docsifytabs-tab-background--active: #1e1e2e; /* Mocha Base */
+    }
+
+    /* Additional layout fixes for tabs area */
+    .docsify-tabs__tab {
+        border-bottom: 1px solid var(--docsifytabs-border-color) !important;
+    }
+    .docsify-tabs__tab--active {
+        border-bottom: 1px solid transparent !important;
+        font-weight: 600;
+    }
+
+    /* GitHub Corner Theme Compatibility */
+    .github-corner svg {
+      fill: #f9e2af; /* Mocha Yellow */
+      color: #1e1e2e; /* Mocha Base */
+    }
+
+    /* Code Syntax Highlighting - Comment Color Fix */
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #585b70 !important; /* Mocha Surface2 - More Faded */
+        font-style: italic;
+    }
+
+    /* Minimal Viewport Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #45475a; /* Mocha Surface1 */
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Z-Hub',
+      repo: 'https://github.com/Funhar/zama-hub',
+      loadSidebar: true,
+      alias: {
+        '/.*/_sidebar.md': '/SUMMARY.md',
+        '/_sidebar.md': '/SUMMARY.md'
+      },
+      subMaxLevel: 0,
+      search: 'auto',
+      auto2top: true,
+
+      // Themeable Configuration
+      themeable: {
+          readyTransition : true,
+          responsiveTables: true
+      },
+
+      // Pagination Plugin
+      pagination: {
+        previousText: 'Previous',
+        nextText: 'Next',
+        crossChapter: true,
+        crossChapterText: true,
+      },
+
+      // Tabs Plugin
+      tabs: {
+        persist: true,
+        sync: true,
+        theme: 'classic',
+        tabComments: true,
+        tabHeadings: true
+      },
+
+      // Alerts Plugin
+      flexibleAlerts: {
+        style: 'flat'
+      },
+
+      plugins: [
+        function(hook, vm) {
+          // Transformation Hook for GitBook compatibility
+          hook.beforeEach(function(html) {
+            // Transform GitBook tabs to Docsify tabs
+            let transformed = html
+              .replace(/{%\s*tabs\s*%}/g, '<!-- tabs:start -->')
+              .replace(/{%\s*endtabs\s*%}/g, '<!-- tabs:end -->')
+              .replace(/{%\s*tab\s+title="([^"]+)"\s*%}/g, '#### **$1**')
+              .replace(/{%\s*endtab\s*%}/g, '');
+
+            // Transform GitBook hints to Docsify flexible alerts
+            transformed = transformed.replace(/{%\s*hint\s+style="([^"]+)"\s*%}/g, function(match, style) {
+              const type = style.toUpperCase();
+              return '> [!' + type + ']';
+            }).replace(/{%\s*endhint\s*%}/g, '');
+
+            return transformed;
+          });
+
+          // Footer Hook for "Edit on GitHub"
+          hook.afterEach(function(html, next) {
+            const editUrl = 'https://github.com/Funhar/zama-hub/edit/main/docs/' + vm.route.file;
+            const footer = [
+              '<hr/>',
+              '<footer>',
+              '<span><a href="' + editUrl + '" target="_blank">Edit this page on GitHub</a></span>',
+              '</footer>'
+            ].join('');
+            next(html + footer);
+          });
+        }
+      ]
+    }
+  </script>
+
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
+
+  <!-- Core Plugins -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+  <!-- Extra Plugins -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-plugin-flexible-alerts"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+  <!-- Prism Languages -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-solidity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+</body>
+</html>
