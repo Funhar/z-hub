@@ -1,4 +1,4 @@
-This example demonstrates how to perform addition operations on encrypted values.
+This example demonstrates FHE addition operations on encrypted values.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

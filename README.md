@@ -13,45 +13,37 @@ This project provides tools and examples for building privacy-preserving smart c
 
 ## Quick Start
 
-### Generate a Standalone Example
+### 🎯 Interactive CLI (Recommended)
 
 ```bash
-# Using npm scripts (recommended)
-npm run create-example fhe-counter ./test-output/my-fhe-counter
-
-# Or directly
-ts-node scripts/create-fhevm-example.ts fhe-counter ../test-output/my-fhe-counter
-
-# Navigate and run
-cd my-fhe-counter
-npm install
-npm run compile
-npm run test
+# Launch interactive menu
+npm run cli
 ```
 
-### Generate a Category Project (Multiple Examples)
+The interactive CLI provides a user-friendly menu to:
+- Create single example projects
+- Create category projects with multiple examples
+- Generate documentation
+- List all available examples
+
+### ⚡ Quick Commands (Non-Interactive)
 
 ```bash
-# Using npm scripts (recommended)
-npm run create-category basic ./test-output/my-basic-examples
+# Create a single example
+npm run cli-create <example-name> [output-dir]
+npm run cli-create fhe-counter ./my-project
 
-# Or directly
-ts-node scripts/create-fhevm-category.ts basic ./test-output/my-basic-examples
+# Create a category project
+npm run cli-category <category-name> [output-dir]
+npm run cli-category basic ./my-basic-examples
 
-# Available categories: basic, auctions, openzeppelin, games
-npm run help:category  # See all categories
-```
+# Generate documentation
+npm run cli-docs [example-name|--all]
+npm run cli-docs fhe-counter
+npm run cli-docs --all
 
-### Generate Documentation
-
-```bash
-# Using npm scripts (recommended)
-npm run generate-docs fhe-counter    # Single example
-npm run generate-all-docs              # All examples
-
-# Or directly
-ts-node scripts/generate-docs.ts fhe-counter
-ts-node scripts/generate-docs.ts --all
+# List all examples
+npm run cli-list
 ```
 
 ## Project Structure

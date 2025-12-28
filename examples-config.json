@@ -37,12 +37,12 @@
     },
     "fhe-add": {
       "contract": "contracts/basic/fhe-operations/FHEAdd.sol",
-      "test": "test/basic/fhe-operators/FHEAdd.ts",
+      "test": "test/basic/fhe-operations/FHEAdd.ts",
       "description": "Demonstrates FHE addition operations"
     },
     "fhe-if-then-else": {
       "contract": "contracts/basic/fhe-operations/FHEIfThenElse.sol",
-      "test": "test/basic/fhe-operators/FHEIfThenElse.ts",
+      "test": "test/basic/fhe-operations/FHEIfThenElse.ts",
       "description": "Shows conditional operations on encrypted values"
     },
     "blind-auction": {
@@ -98,11 +98,11 @@
         },
         {
           "path": "contracts/basic/fhe-operations/FHEAdd.sol",
-          "test": "test/basic/fhe-operators/FHEAdd.ts"
+          "test": "test/basic/fhe-operations/FHEAdd.ts"
         },
         {
           "path": "contracts/basic/fhe-operations/FHEIfThenElse.sol",
-          "test": "test/basic/fhe-operators/FHEIfThenElse.ts"
+          "test": "test/basic/fhe-operations/FHEIfThenElse.ts"
         }
       ]
     },
