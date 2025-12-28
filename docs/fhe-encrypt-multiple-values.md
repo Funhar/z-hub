@@ -1,4 +1,4 @@
-This example shows how to encrypt and handle multiple values in a single transaction.
+Understand how to handle multiple encrypted values in a single transaction. Covers batch encryption best practices and managing complex encrypted states in smart contracts.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

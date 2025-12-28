@@ -1,4 +1,4 @@
-This example demonstrates how to build a confidential counter using FHEVM, in comparison to a simple counter.
+Learn how to build a confidential counter using FHEVM. This guide demonstrates secure state management and incrementing values without revealing their actual contents.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

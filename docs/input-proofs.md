@@ -1,4 +1,4 @@
-Documentation for InputProofs
+Verify encrypted input integrity using cryptographic proofs. explains why input proofs are vital for preventing malicious data injection and ensuring data validity in FHEVM.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

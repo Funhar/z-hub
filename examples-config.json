@@ -3,148 +3,148 @@
     "fhe-counter": {
       "contract": "contracts/basic/FHECounter.sol",
       "test": "test/basic/FHECounter.ts",
-      "description": "A simple FHE counter demonstrating basic encrypted operations"
+      "description": "A confidential counter using FHEVM to securely increment and track values. Demonstrates basic encrypted arithmetic and state management in a privacy-preserving environment."
     },
     "encrypt-single-value": {
       "contract": "contracts/basic/encrypt/EncryptSingleValue.sol",
       "test": "test/basic/encrypt/EncryptSingleValue.ts",
-      "description": "Demonstrates FHE encryption mechanism and common pitfalls"
+      "description": "Master the FHE encryption mechanism by learning how to securely capture and store single encrypted values. Highlights essential security patterns and common pitfalls."
     },
     "encrypt-multiple-values": {
       "contract": "contracts/basic/encrypt/EncryptMultipleValues.sol",
       "test": "test/basic/encrypt/EncryptMultipleValues.ts",
-      "description": "Shows how to encrypt and handle multiple values"
+      "description": "Learn to handle multiple encrypted values in a single transaction efficiently. Covers batch encryption techniques and best practices for managing complex private states."
     },
     "user-decrypt-single-value": {
       "contract": "contracts/basic/decrypt/UserDecryptSingleValue.sol",
       "test": "test/basic/decrypt/UserDecryptSingleValue.ts",
-      "description": "Demonstrates user decryption and permission requirements"
+      "description": "Explore user-initiated decryption where only authorized owners can view private data. Covers the FHEVM permission system and secure re-encryption keys."
     },
     "user-decrypt-multiple-values": {
       "contract": "contracts/basic/decrypt/UserDecryptMultipleValues.sol",
       "test": "test/basic/decrypt/UserDecryptMultipleValues.ts",
-      "description": "Shows how to decrypt multiple encrypted values"
+      "description": "Unlock multiple encrypted values simultaneously for an authorized user. Shows efficient decryption workflows and managing complex access permissions for private data."
     },
     "public-decrypt-single-value": {
       "contract": "contracts/basic/decrypt/PublicDecryptSingleValue.sol",
       "test": "test/basic/decrypt/PublicDecryptSingleValue.ts",
-      "description": "Demonstrates public decryption mechanism"
+      "description": "Convert a private FHE value into a public state readable by everyone on-chain. Ideal for revealing competition winners or outcomes that must satisfy private conditions."
     },
     "public-decrypt-multiple-values": {
       "contract": "contracts/basic/decrypt/PublicDecryptMultipleValues.sol",
       "test": "test/basic/decrypt/PublicDecryptMultipleValues.ts",
-      "description": "Shows public decryption with multiple values"
+      "description": "Simultaneously reveal multiple encrypted values to the public ledger. Essential for batch-revealing game results while maintaining privacy during the computation phase."
     },
     "fhe-add": {
       "contract": "contracts/basic/fhe-operations/FHEAdd.sol",
       "test": "test/basic/fhe-operations/FHEAdd.ts",
-      "description": "Demonstrates FHE addition operations"
+      "description": "Perform trustless addition on encrypted numbers without ever seeing raw data. Shows how FHE addition allows computing totals while keeping inputs completely confidential."
     },
     "fhe-if-then-else": {
       "contract": "contracts/basic/fhe-operations/FHEIfThenElse.sol",
       "test": "test/basic/fhe-operations/FHEIfThenElse.ts",
-      "description": "Shows conditional operations on encrypted values"
+      "description": "Implement conditional logic on encrypted values using FHE.select. Learn how to branch contract execution based on private conditions without leaking info about the data."
     },
     "erc7984-erc20-wrapper": {
       "contract": "contracts/openzeppelin/ERC7984ERC20Wrapper.sol",
       "test": "test/openzeppelin/ERC7984ERC20Wrapper.ts",
-      "description": "Wraps ERC20 tokens into confidential ERC7984 tokens"
+      "description": "Transform standard ERC20 tokens into privacy-preserving ERC7984 tokens. Enables existing assets to benefit from FHEVM's confidential transfers and balance protection."
     },
     "erc7984-example": {
       "contract": "contracts/openzeppelin/ERC7984Example.sol",
       "test": "test/openzeppelin/ERC7984Example.ts",
-      "description": "Basic confidential token with mint/burn functionality"
+      "description": "Full confidential token implementation based on ERC7984. Features private minting and balance management using FHEVM to ensure transaction amounts stay secret."
     },
     "vesting-wallet-confidential": {
       "contract": "contracts/openzeppelin/VestingWalletConfidential.sol",
       "test": "test/openzeppelin/VestingWalletConfidential.ts",
-      "description": "Linear vesting schedule for confidential tokens"
+      "description": "Automate private token releases with a confidential vesting wallet. Manages linear schedules where release amounts and current holdings remain hidden from the public."
     },
     "swap-erc7984-to-erc20": {
       "contract": "contracts/openzeppelin/SwapERC7984ToERC20.sol",
       "test": "test/openzeppelin/SwapERC7984ToERC20.ts",
-      "description": "Swaps confidential ERC7984 to standard ERC20 tokens"
+      "description": "Securely exchange confidential ERC7984 tokens for standard ERC20 tokens. Shows how to bridge privacy-enabled assets back to transparent ecosystems while managing slippage."
     },
     "swap-erc7984-to-erc7984": {
       "contract": "contracts/openzeppelin/SwapERC7984ToERC7984.sol",
       "test": "test/openzeppelin/SwapERC7984ToERC7984.ts",
-      "description": "Swaps between two confidential ERC7984 tokens"
+      "description": "Enable completely private swaps between two confidential ERC7984 tokens. An AMM-style swap where both input and output amounts stay encrypted during the entire trade."
     },
     "blind-auction": {
       "contract": "contracts/advanced/BlindAuction.sol",
       "test": "test/advanced/BlindAuction.ts",
-      "description": "Sealed-bid auction with encrypted bids"
+      "description": "Sealed-bid auction where all bids are submitted as encrypted FHE values. The winner is determined privately on-chain, ensuring no participant can see others' bids."
     },
     "access-control": {
       "contract": "contracts/basic/deep-dive/AccessControl.sol",
       "test": "test/basic/deep-dive/AccessControl.ts",
-      "description": "Demonstrates FHE.allow, allowTransient and allowThis"
+      "description": "Master FHEVM access control using FHE.allow and allowTransient. Essential for managing who can compute on handles, ensuring private data never leaks to unauthorized users."
     },
     "anti-patterns": {
       "contract": "contracts/basic/deep-dive/AntiPatterns.sol",
       "test": "test/basic/deep-dive/AntiPatterns.ts",
-      "description": "Common FHEVM mistakes and how to avoid them"
+      "description": "Avoid security and performance mistakes by studying common FHEVM anti-patterns. Learn about side-channel leaks and gas-intensive operations to build robust contracts."
     },
     "handle-lifecycle": {
       "contract": "contracts/basic/deep-dive/HandleLifecycle.sol",
       "test": "test/basic/deep-dive/HandleLifecycle.ts",
-      "description": "FHE handle creation, derivation and lifecycle"
+      "description": "Deep dive into FHE handle lifecycles, from creation to storage and derivation. Understand how handles point to encrypted data and how to manage them effectively."
     },
     "input-proofs": {
       "contract": "contracts/basic/deep-dive/InputProofs.sol",
       "test": "test/basic/deep-dive/InputProofs.ts",
-      "description": "How input proofs work and why they are essential"
+      "description": "Verify encrypted input integrity using cryptographic proofs. explains why input proofs are vital for preventing malicious data injection and ensuring data validity."
     },
     "fhe-eq": {
       "contract": "contracts/basic/fhe-operations/FHEEq.sol",
       "test": "test/basic/fhe-operations/FHEEq.ts",
-      "description": "Demonstrates FHE equality comparison"
+      "description": "Compare encrypted values for equality without revealing contents."
     },
     "fhe-sub": {
       "contract": "contracts/basic/fhe-operations/FHESub.sol",
       "test": "test/basic/fhe-operations/FHESub.ts",
-      "description": "Demonstrates FHE subtraction operations"
+      "description": "Execute subtraction on encrypted values securely."
     },
     "dark-pool": {
       "contract": "contracts/finance/DarkPool.sol",
       "test": "test/finance/DarkPool.ts",
-      "description": "Order book with hidden prices and amounts"
+      "description": "Build a high-privacy trading venue where order prices and sizes are hidden. Uses FHEVM to match trades privately, preventing front-running and protecting trading intent."
     },
     "private-vault": {
       "contract": "contracts/finance/PrivateVault.sol",
       "test": "test/finance/PrivateVault.ts",
-      "description": "Private vault with encrypted deposits and balances"
+      "description": "Create a secure asset vault where deposits, withdrawals, and balances are confidential. Manage funds on-chain without exposing treasury details to the public."
     },
     "secret-voting": {
       "contract": "contracts/finance/SecretVoting.sol",
       "test": "test/finance/SecretVoting.ts",
-      "description": "Anonymous voting with encrypted tallies"
+      "description": "Revolutionize governance with anonymous voting! Ensures individual votes stay encrypted while being aggregated on-chain, protecting voter privacy and preventing bias."
     },
     "anonymous-whistle": {
       "contract": "contracts/advanced/AnonymousWhistle.sol",
       "test": "test/advanced/AnonymousWhistle.ts",
-      "description": "Anonymous reporting with identity protection"
+      "description": "A secure whistleblowing platform that protects reporter identity using FHEVM. Enables submission of encrypted reports that can only be decrypted by authorized parties."
     },
     "fair-dice": {
       "contract": "contracts/advanced/FairDice.sol",
       "test": "test/advanced/FairDice.ts",
-      "description": "Provably fair dice with commit-reveal"
+      "description": "Provably fair on-chain randomness using a commit-reveal scheme with FHE. Ensures neither players nor the house can influence dice rolls, providing a private experience."
     },
     "private-messaging": {
       "contract": "contracts/advanced/PrivateMessaging.sol",
       "test": "test/advanced/PrivateMessaging.ts",
-      "description": "Address-based encrypted messaging"
+      "description": "Send and receive private messages directly on-chain. Message content is encrypted for the recipient only, allowing secure, decentralized communication without relayers."
     },
     "secret-tip": {
       "contract": "contracts/advanced/SecretTip.sol",
       "test": "test/advanced/SecretTip.ts",
-      "description": "Anonymous tipping with hidden amounts"
+      "description": "Reward contributors anonymously with hidden tip amounts. Allows users to send support without revealing values, maintaining financial privacy for both parties."
     }
   },
   "categories": {
     "basic": {
       "name": "Basic FHEVM Examples",
-      "description": "Fundamental FHEVM operations including encryption, decryption, and basic FHE operations",
+      "description": "Explore the building blocks of FHEVM. This category covers fundamental operations like encryption, decryption, arithmetic, and conditional logic for building private smart contracts.",
       "contracts": [
         {
           "path": "contracts/basic/FHECounter.sol",
@@ -210,12 +210,12 @@
     },
     "auctions": {
       "name": "Auction Examples",
-      "description": "Advanced auction implementations using confidential bids and prices",
+      "description": "Build fair and trustless auctions using FHE. Learn how to manage sealed bids and determine winners privately on-chain, ensuring that participation remains confidential.",
       "contracts": []
     },
     "openzeppelin": {
       "name": "OpenZeppelin Confidential Contracts",
-      "description": "ERC7984 and confidential token implementations using OpenZeppelin library",
+      "description": "Leverage the power of OpenZeppelin with FHEVM. Features standard-compliant confidential tokens (ERC7984), secure wrappers, and privacy-preserving vesting schedules.",
       "contracts": [
         {
           "path": "contracts/openzeppelin/ERC7984Example.sol",
@@ -244,12 +244,12 @@
     },
     "games": {
       "name": "Game Examples",
-      "description": "Privacy-preserving game implementations using FHEVM",
+      "description": "Create immersive and private gaming experiences on-chain. Implement hidden game states, private randomness, and secret moves using FHEVM to ensure fair play without revealing data.",
       "contracts": []
     },
     "advanced": {
       "name": "Advanced Examples",
-      "description": "Advanced examples using FHEVM",
+      "description": "Go beyond the basics with complex FHEVM use cases. sophisticated patterns like private messaging, whistleblowing, and multi-stage protocols that push on-chain privacy boundaries.",
       "contracts": [
         {
           "path": "contracts/advanced/BlindAuction.sol",
@@ -275,7 +275,7 @@
     },
     "finance": {
       "name": "Finance Examples",
-      "description": "Privacy-preserving DeFi and financial applications",
+      "description": "Modernize DeFi with complete transaction privacy. Explore advanced financial apps like dark pools, private vaults, and secret voting where trade details remain hidden from public view.",
       "contracts": [
         {
           "path": "contracts/finance/DarkPool.sol",
@@ -295,169 +295,169 @@
   "docs": {
     "fhe-counter": {
       "title": "FHE Counter",
-      "description": "This example demonstrates how to build a confidential counter using FHEVM, in comparison to a simple counter.",
+      "description": "Learn how to build a confidential counter using FHEVM. This guide demonstrates secure state management and incrementing values without revealing their actual contents.",
       "output": "docs/fhe-counter.md",
       "category": "Basic"
     },
     "encrypt-single-value": {
       "title": "Encrypt Single Value",
-      "description": "This example demonstrates the FHE encryption mechanism and highlights common pitfalls developers may encounter.",
+      "description": "Master the FHE encryption mechanism and explore how to securely capture single values. Includes detailed explanations of security patterns and common developer pitfalls.",
       "output": "docs/fhe-encrypt-single-value.md",
       "category": "Basic - Encryption"
     },
     "encrypt-multiple-values": {
       "title": "Encrypt Multiple Values",
-      "description": "This example shows how to encrypt and handle multiple values in a single transaction.",
+      "description": "Understand how to handle multiple encrypted values in a single transaction. Covers batch encryption best practices and managing complex encrypted states in smart contracts.",
       "output": "docs/fhe-encrypt-multiple-values.md",
       "category": "Basic - Encryption"
     },
     "user-decrypt-single-value": {
       "title": "User Decrypt Single Value",
-      "description": "This example demonstrates the FHE user decryption mechanism and highlights common pitfalls developers may encounter.",
+      "description": "Explore user-initiated decryption and the FHEVM permission system. Learn how to securely reveal private data only to authorized owners using re-encryption keys.",
       "output": "docs/fhe-user-decrypt-single-value.md",
       "category": "Basic - Decryption"
     },
     "user-decrypt-multiple-values": {
       "title": "User Decrypt Multiple Values",
-      "description": "This example shows how to decrypt multiple encrypted values for a user.",
+      "description": "Unlock multiple encrypted values simultaneously for authorized users. This guide shows efficient decryption workflows and complex access permission management in FHEVM.",
       "output": "docs/fhe-user-decrypt-multiple-values.md",
       "category": "Basic - Decryption"
     },
     "fhe-add": {
       "title": "FHE Add",
-      "description": "This example demonstrates FHE addition operations on encrypted values.",
+      "description": "Perform trustless addition on encrypted numbers. Learn how FHE addition allows computing balances or tallies on-chain while keeping individual inputs completely private.",
       "output": "docs/fheadd.md",
       "category": "Basic - FHE Operations"
     },
     "fhe-if-then-else": {
       "title": "FHE If-Then-Else",
-      "description": "This example shows conditional operations on encrypted values using FHE.",
+      "description": "Implement conditional logic on encrypted values using FHE.select. Learn how to branch contract logic based on private conditions without leaking any underlying data.",
       "output": "docs/fheifthenelse.md",
       "category": "Basic - FHE Operations"
     },
     "public-decrypt-single-value": {
       "title": "Public Decrypt Single Value",
-      "description": "Demonstrates public decryption mechanism for single values.",
+      "description": "Convert private FHE values into public states readable by everyone. Ideal for revealing competition winners or settling results that must satisfy private conditions.",
       "output": "docs/public-decrypt-single-value.md",
       "category": "Basic - Decryption"
     },
     "public-decrypt-multiple-values": {
       "title": "Public Decrypt Multiple Values",
-      "description": "Shows public decryption with multiple values.",
+      "description": "Simultaneously reveal multiple encrypted values to the public ledger. Essential for batch-revealing results while maintaining privacy during the computation phase.",
       "output": "docs/public-decrypt-multiple-values.md",
       "category": "Basic - Decryption"
     },
     "erc7984-erc20-wrapper": {
       "title": "ERC7984 ERC20 Wrapper",
-      "description": "Documentation for ERC7984ERC20Wrapper",
+      "description": "Transform standard ERC20 tokens into privacy-preserving ERC7984 tokens. This wrapper enables existing assets to benefit from FHEVM's confidential transfers and balance protection.",
       "output": "docs/erc7984-erc20-wrapper.md",
       "category": "Openzeppelin"
     },
     "erc7984-example": {
       "title": "ERC7984 Example",
-      "description": "Documentation for ERC7984Example",
+      "description": "A full-featured confidential token based on the ERC7984 standard. Learn about private minting, burning, and balance management using FHEVM to ensure transaction privacy.",
       "output": "docs/erc7984-example.md",
       "category": "Openzeppelin"
     },
     "vesting-wallet-confidential": {
       "title": "Vesting Wallet Confidential",
-      "description": "Documentation for VestingWalletConfidential",
+      "description": "Automate private token releases with a confidential vesting wallet. Manage linear vesting schedules where release amounts and current holdings remain hidden from the public.",
       "output": "docs/vesting-wallet-confidential.md",
       "category": "Openzeppelin"
     },
     "swap-erc7984-to-erc20": {
       "title": "Swap ERC7984 To ERC20",
-      "description": "Documentation for SwapERC7984ToERC20",
+      "description": "Exchange confidential ERC7984 tokens for standard ERC20 tokens securely. bridge privacy-enabled assets back to transparent ecosystems while managing slippage privately.",
       "output": "docs/swap-erc7984-to-erc20.md",
       "category": "Openzeppelin"
     },
     "swap-erc7984-to-erc7984": {
       "title": "Swap ERC7984 To ERC7984",
-      "description": "Documentation for SwapERC7984ToERC7984",
+      "description": "Enable private swaps between two confidential ERC7984 tokens. An AMM-style swap where both input and output amounts stay encrypted during the entire trade process.",
       "output": "docs/swap-erc7984-to-erc7984.md",
       "category": "Openzeppelin"
     },
     "blind-auction": {
       "title": "Blind Auction",
-      "description": "Documentation for BlindAuction",
+      "description": "Trustless sealed-bid auctions where bids are submitted as encrypted values. The winner is determined privately on-chain, ensuring bids stay secret until the reveal phase.",
       "output": "docs/blind-auction.md",
       "category": "Advanced"
     },
     "access-control": {
       "title": "Access Control",
-      "description": "Documentation for AccessControl",
+      "description": "Master FHEVM access control using FHE.allow and allowTransient. Essential for managing who can compute on or decrypt handles, ensuring private data never leaks.",
       "output": "docs/access-control.md",
       "category": "Basic"
     },
     "anti-patterns": {
       "title": "Anti Patterns",
-      "description": "Documentation for AntiPatterns",
+      "description": "Avoid security and performance mistakes by studying common FHEVM anti-patterns. Learn about side-channel leaks, improper handle usage, and gas-intensive operations.",
       "output": "docs/anti-patterns.md",
       "category": "Basic"
     },
     "handle-lifecycle": {
       "title": "Handle Lifecycle",
-      "description": "Documentation for HandleLifecycle",
+      "description": "Understand the lifecycle of FHE handles, from creation to storage and derivation. Learn how to manage handles effectively across multiple contract calls and transactions.",
       "output": "docs/handle-lifecycle.md",
       "category": "Basic"
     },
     "input-proofs": {
       "title": "Input Proofs",
-      "description": "Documentation for InputProofs",
+      "description": "Verify encrypted input integrity using cryptographic proofs. explains why input proofs are vital for preventing malicious data injection and ensuring data validity in FHEVM.",
       "output": "docs/input-proofs.md",
       "category": "Basic"
     },
     "fhe-eq": {
       "title": "FHE Equality Comparison",
-      "description": "Demonstrates FHE.eq() for comparing encrypted values",
+      "description": "Master FHE.eq() to compare encrypted values without revealing contents.",
       "output": "docs/fhe-eq.md",
       "category": "Basic - FHE Operations"
     },
     "fhe-sub": {
       "title": "FHE Subtraction",
-      "description": "Demonstrates FHE.sub() for subtracting encrypted values",
+      "description": "Learn to use FHE.sub() for subtracting encrypted values securely.",
       "output": "docs/fhe-sub.md",
       "category": "Basic - FHE Operations"
     },
     "dark-pool": {
       "title": "Dark Pool",
-      "description": "Documentation for DarkPool",
+      "description": "Build high-privacy trading venues where order prices and sizes are kept hidden. Match trades privately using FHEVM, preventing front-running and protecting trading intent.",
       "output": "docs/dark-pool.md",
       "category": "Finance"
     },
     "private-vault": {
       "title": "Private Vault",
-      "description": "Documentation for PrivateVault",
+      "description": "Secure asset vaults where user deposits, withdrawals, and balances are confidential. ideal for institutional users managing funds on-chain without exposing treasury details.",
       "output": "docs/private-vault.md",
       "category": "Finance"
     },
     "secret-voting": {
       "title": "Secret Voting",
-      "description": "Documentation for SecretVoting",
+      "description": "Anonymous on-chain voting where individual votes stay encrypted while being aggregated. Final results are revealed publicly, protecting voter privacy and preventing bias.",
       "output": "docs/secret-voting.md",
       "category": "Finance"
     },
     "anonymous-whistle": {
       "title": "Anonymous Whistle",
-      "description": "Documentation for AnonymousWhistle",
+      "description": "A secure whistleblowing platform protecting reporter identity using FHEVM. Enables individuals to submit encrypted reports that can only be decrypted by authorized parties.",
       "output": "docs/anonymous-whistle.md",
       "category": "Advanced"
     },
     "fair-dice": {
       "title": "Fair Dice",
-      "description": "Documentation for FairDice",
+      "description": "Provably fair on-chain randomness using a commit-reveal scheme with FHE. Ensures that neither the player nor the house can influence or predict the dice roll results.",
       "output": "docs/fair-dice.md",
       "category": "Advanced"
     },
     "private-messaging": {
       "title": "Private Messaging",
-      "description": "Documentation for PrivateMessaging",
+      "description": "Send and receive private messages directly on-chain. Message content is encrypted for the recipient only, allowing secure, decentralized communication without relayers.",
       "output": "docs/private-messaging.md",
       "category": "Advanced"
     },
     "secret-tip": {
       "title": "Secret Tip",
-      "description": "Documentation for SecretTip",
+      "description": "Reward creators or contributors anonymously with hidden tip amounts. Enables users to send support without revealing values, maintaining financial privacy for all parties.",
       "output": "docs/secret-tip.md",
       "category": "Advanced"
     }

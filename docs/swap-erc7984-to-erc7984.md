@@ -1,4 +1,4 @@
-Documentation for SwapERC7984ToERC7984
+Enable private swaps between two confidential ERC7984 tokens. An AMM-style swap where both input and output amounts stay encrypted during the entire trade process.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

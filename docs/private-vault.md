@@ -1,4 +1,4 @@
-Documentation for PrivateVault
+Secure asset vaults where user deposits, withdrawals, and balances are confidential. ideal for institutional users managing funds on-chain without exposing treasury details.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

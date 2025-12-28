@@ -1,4 +1,4 @@
-Documentation for AnonymousWhistle
+A secure whistleblowing platform protecting reporter identity using FHEVM. Enables individuals to submit encrypted reports that can only be decrypted by authorized parties.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

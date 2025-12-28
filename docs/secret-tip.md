@@ -1,4 +1,4 @@
-Documentation for SecretTip
+Reward creators or contributors anonymously with hidden tip amounts. Enables users to send support without revealing values, maintaining financial privacy for all parties.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

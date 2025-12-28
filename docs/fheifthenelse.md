@@ -1,4 +1,4 @@
-This example shows conditional operations on encrypted values using FHE.
+Implement conditional logic on encrypted values using FHE.select. Learn how to branch contract logic based on private conditions without leaking any underlying data.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

@@ -1,4 +1,4 @@
-Demonstrates FHE.eq() for comparing encrypted values
+Master FHE.eq() to compare encrypted values without revealing contents.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

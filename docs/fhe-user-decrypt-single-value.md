@@ -1,4 +1,4 @@
-This example demonstrates the FHE user decryption mechanism and highlights common pitfalls developers may encounter.
+Explore user-initiated decryption and the FHEVM permission system. Learn how to securely reveal private data only to authorized owners using re-encryption keys.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

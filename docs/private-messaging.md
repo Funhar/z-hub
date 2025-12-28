@@ -1,4 +1,4 @@
-Documentation for PrivateMessaging
+Send and receive private messages directly on-chain. Message content is encrypted for the recipient only, allowing secure, decentralized communication without relayers.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

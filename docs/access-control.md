@@ -1,4 +1,4 @@
-Documentation for AccessControl
+Master FHEVM access control using FHE.allow and allowTransient. Essential for managing who can compute on or decrypt handles, ensuring private data never leaks.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

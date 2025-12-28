@@ -1,4 +1,4 @@
-This example demonstrates FHE addition operations on encrypted values.
+Perform trustless addition on encrypted numbers. Learn how FHE addition allows computing balances or tallies on-chain while keeping individual inputs completely private.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

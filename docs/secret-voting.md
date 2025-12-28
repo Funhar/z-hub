@@ -1,4 +1,4 @@
-Documentation for SecretVoting
+Anonymous on-chain voting where individual votes stay encrypted while being aggregated. Final results are revealed publicly, protecting voter privacy and preventing bias.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

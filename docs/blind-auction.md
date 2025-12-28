@@ -1,4 +1,4 @@
-Documentation for BlindAuction
+Trustless sealed-bid auctions where bids are submitted as encrypted values. The winner is determined privately on-chain, ensuring bids stay secret until the reveal phase.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

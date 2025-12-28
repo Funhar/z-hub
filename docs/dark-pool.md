@@ -1,4 +1,4 @@
-Documentation for DarkPool
+Build high-privacy trading venues where order prices and sizes are kept hidden. Match trades privately using FHEVM, preventing front-running and protecting trading intent.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

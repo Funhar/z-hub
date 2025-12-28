@@ -1,4 +1,4 @@
-Shows public decryption with multiple values.
+Simultaneously reveal multiple encrypted values to the public ledger. Essential for batch-revealing results while maintaining privacy during the computation phase.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

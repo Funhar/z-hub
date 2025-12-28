@@ -1,4 +1,4 @@
-This example demonstrates the FHE encryption mechanism and highlights common pitfalls developers may encounter.
+Master the FHE encryption mechanism and explore how to securely capture single values. Includes detailed explanations of security patterns and common developer pitfalls.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

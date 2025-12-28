@@ -1,4 +1,4 @@
-Documentation for SwapERC7984ToERC20
+Exchange confidential ERC7984 tokens for standard ERC20 tokens securely. bridge privacy-enabled assets back to transparent ecosystems while managing slippage privately.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

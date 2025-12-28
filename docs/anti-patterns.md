@@ -1,4 +1,4 @@
-Documentation for AntiPatterns
+Avoid security and performance mistakes by studying common FHEVM anti-patterns. Learn about side-channel leaks, improper handle usage, and gas-intensive operations.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

@@ -1,4 +1,4 @@
-Documentation for ERC7984ERC20Wrapper
+Transform standard ERC20 tokens into privacy-preserving ERC7984 tokens. This wrapper enables existing assets to benefit from FHEVM's confidential transfers and balance protection.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

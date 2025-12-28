@@ -1,4 +1,4 @@
-Documentation for FairDice
+Provably fair on-chain randomness using a commit-reveal scheme with FHE. Ensures that neither the player nor the house can influence or predict the dice roll results.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

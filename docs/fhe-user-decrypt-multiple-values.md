@@ -1,4 +1,4 @@
-This example shows how to decrypt multiple encrypted values for a user.
+Unlock multiple encrypted values simultaneously for authorized users. This guide shows efficient decryption workflows and complex access permission management in FHEVM.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

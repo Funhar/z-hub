@@ -1,4 +1,4 @@
-Documentation for HandleLifecycle
+Understand the lifecycle of FHE handles, from creation to storage and derivation. Learn how to manage handles effectively across multiple contract calls and transactions.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

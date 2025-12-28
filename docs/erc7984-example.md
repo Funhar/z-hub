@@ -1,4 +1,4 @@
-Documentation for ERC7984Example
+A full-featured confidential token based on the ERC7984 standard. Learn about private minting, burning, and balance management using FHEVM to ensure transaction privacy.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

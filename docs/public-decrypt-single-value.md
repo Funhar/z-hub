@@ -1,4 +1,4 @@
-Demonstrates public decryption mechanism for single values.
+Convert private FHE values into public states readable by everyone. Ideal for revealing competition winners or settling results that must satisfy private conditions.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:

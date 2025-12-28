@@ -1,4 +1,4 @@
-Documentation for VestingWalletConfidential
+Automate private token releases with a confidential vesting wallet. Manage linear vesting schedules where release amounts and current holdings remain hidden from the public.
 
 {% hint style="info" %}
 To run this example correctly, make sure the files are placed in the following directories:
