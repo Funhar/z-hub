@@ -2,22 +2,34 @@
 
 ## Basic
 
-- [FHE counter](fhe-counter.md)
+- [FHE Counter](fhe-counter.md)
 - FHE Operations
   - [Add](fheadd.md)
-  - [If then else](fheifthenelse.md)
+  - [Subtraction](fhe-sub.md)
+  - [Equality Comparison](fhe-eq.md)
+  - [If Then Else](fheifthenelse.md)
 - Encryption
-  - [Encrypt single value](fhe-encrypt-single-value.md)
-  - [Encrypt multiple values](fhe-encrypt-multiple-values.md)
+  - [Encrypt Single Value](fhe-encrypt-single-value.md)
+  - [Encrypt Multiple Values](fhe-encrypt-multiple-values.md)
 - Decryption
-  - [User decrypt single value](fhe-user-decrypt-single-value.md)
-  - [User decrypt multiple values](fhe-user-decrypt-multiple-values.md)
+  - [User Decrypt Single Value](fhe-user-decrypt-single-value.md)
+  - [User Decrypt Multiple Values](fhe-user-decrypt-multiple-values.md)
   - [Public Decrypt Single Value](public-decrypt-single-value.md)
   - [Public Decrypt Multiple Values](public-decrypt-multiple-values.md)
+- Deep Dive
+  - [Access Control](access-control.md)
+  - [Input Proofs](input-proofs.md)
+  - [Handle Lifecycle](handle-lifecycle.md)
+  - [Anti Patterns](anti-patterns.md)
 
-## Openzeppelin
+## OpenZeppelin
+
+- [ERC7984 Example](erc7984-example.md)
 - [ERC7984 ERC20 Wrapper](erc7984-erc20-wrapper.md)
-- [Vesting Wallet Confidential](vesting-wallet-confidential.md)
 - [Swap ERC7984 To ERC20](swap-erc7984-to-erc20.md)
 - [Swap ERC7984 To ERC7984](swap-erc7984-to-erc7984.md)
-- [ERC7984 Example](erc7984-example.md)
+- [Vesting Wallet Confidential](vesting-wallet-confidential.md)
+
+## Advanced
+
+- [Blind Auction](blind-auction.md)

@@ -31,6 +31,8 @@ interface TestResult {
   success: boolean;
   duration: number;
   error?: string;
+  testsPassed?: number;
+  testsFailed?: number;
 }
 
 // Load config
@@ -79,22 +81,46 @@ async function testExample(exampleName: string): Promise<TestResult> {
 
     // Step 4: Run tests
     const testSpinner = ora("Running tests...").start();
+    let testsPassed = 0;
+    let testsFailed = 0;
     try {
-      execSync("npm run test", {
+      const testOutput = execSync("npm run test", {
         stdio: "pipe",
         cwd: exampleDir,
         timeout: 300000,
-      });
-      testSpinner.succeed("Tests passed");
+      }).toString();
+
+      // Parse Mocha output for test counts
+      // Mocha outputs like: "2 passing (1s)" or "1 passing" "1 failing"
+      const passingMatch = testOutput.match(/(\d+)\s+passing/);
+      const failingMatch = testOutput.match(/(\d+)\s+failing/);
+
+      if (passingMatch) testsPassed = parseInt(passingMatch[1], 10);
+      if (failingMatch) testsFailed = parseInt(failingMatch[1], 10);
+
+      testSpinner.succeed(`Tests passed (${testsPassed} tests)`);
     } catch (testError: any) {
       testSpinner.fail("Tests failed");
       const stdout = testError.stdout?.toString() || "";
       const stderr = testError.stderr?.toString() || "";
+
+      // Try to parse counts even from failed output
+      const passingMatch = stdout.match(/(\d+)\s+passing/);
+      const failingMatch = stdout.match(/(\d+)\s+failing/);
+      if (passingMatch) testsPassed = parseInt(passingMatch[1], 10);
+      if (failingMatch) testsFailed = parseInt(failingMatch[1], 10);
+
       throw new Error(`Test Error:\n${stdout}\n${stderr}`);
     }
 
     const duration = (Date.now() - startTime) / 1000;
-    return { example: exampleName, success: true, duration };
+    return {
+      example: exampleName,
+      success: true,
+      duration,
+      testsPassed,
+      testsFailed,
+    };
   } catch (error: any) {
     const duration = (Date.now() - startTime) / 1000;
     return {
@@ -116,18 +142,34 @@ function displayResults(results: TestResult[]): void {
   console.log(chalk.gray("\n" + "=".repeat(60)));
   console.log(chalk.bold.cyan("\n📊 Test Results\n"));
 
-  let passed = 0;
-  let failed = 0;
+  let examplesPassed = 0;
+  let examplesFailed = 0;
+  let totalTestsPassed = 0;
+  let totalTestsFailed = 0;
 
   for (const result of results) {
     if (result.success) {
+      const testInfo = result.testsPassed
+        ? chalk.gray(` - ${result.testsPassed} tests`)
+        : "";
       console.log(
         chalk.green(`  ✅ ${result.example}`) +
+          testInfo +
           chalk.gray(` (${result.duration.toFixed(1)}s)`)
       );
-      passed++;
+      examplesPassed++;
+      totalTestsPassed += result.testsPassed || 0;
+      totalTestsFailed += result.testsFailed || 0;
     } else {
-      console.log(chalk.red(`  ❌ ${result.example}`));
+      const testInfo =
+        result.testsPassed || result.testsFailed
+          ? chalk.gray(
+              ` - ${result.testsPassed || 0} passed, ${
+                result.testsFailed || 0
+              } failed`
+            )
+          : "";
+      console.log(chalk.red(`  ❌ ${result.example}`) + testInfo);
       if (result.error) {
         // Show more error lines for debugging
         const errorLines = result.error.split("\n").slice(0, 30).join("\n");
@@ -135,18 +177,33 @@ function displayResults(results: TestResult[]): void {
         console.log(chalk.gray(errorLines));
         console.log(chalk.yellow("--- End Error ---\n"));
       }
-      failed++;
+      examplesFailed++;
+      totalTestsPassed += result.testsPassed || 0;
+      totalTestsFailed += result.testsFailed || 0;
     }
   }
 
   console.log(chalk.gray("\n" + "=".repeat(60)));
+
+  // Show examples summary
   console.log(
     chalk.bold(
-      `\nResult: ${chalk.green(passed + " passed")}, ${chalk.red(
-        failed + " failed"
+      `\nExamples: ${chalk.green(examplesPassed + " passed")}, ${chalk.red(
+        examplesFailed + " failed"
       )}`
     )
   );
+
+  // Show individual tests summary
+  if (totalTestsPassed > 0 || totalTestsFailed > 0) {
+    console.log(
+      chalk.bold(
+        `Tests: ${chalk.green(totalTestsPassed + " passed")}, ${chalk.red(
+          totalTestsFailed + " failed"
+        )}`
+      )
+    );
+  }
 
   const totalTime = results.reduce((sum, r) => sum + r.duration, 0);
   console.log(chalk.gray(`Total time: ${totalTime.toFixed(1)}s\n`));

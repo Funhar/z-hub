@@ -210,7 +210,20 @@ function scanExamples(): void {
 
     const fixturePath = findFixtureFile(testPath, rootDir);
 
-    // Check if example already exists
+    // Check if this contract path already exists with a different key
+    const existingEntryByPath = Object.entries(config.examples).find(
+      ([, value]) => value.contract === contractPath
+    );
+
+    if (existingEntryByPath) {
+      const [existingKey] = existingEntryByPath;
+      if (existingKey !== exampleKey) {
+        // Contract already exists with different key, skip to avoid duplicates
+        continue;
+      }
+    }
+
+    // Check if example already exists by key
     const exists = config.examples[exampleKey];
 
     if (exists) {

@@ -69,6 +69,41 @@
       "contract": "contracts/openzeppelin/SwapERC7984ToERC7984.sol",
       "test": "test/openzeppelin/SwapERC7984ToERC7984.ts",
       "description": "Swaps between two confidential ERC7984 tokens"
+    },
+    "blind-auction": {
+      "contract": "contracts/advanced/BlindAuction.sol",
+      "test": "test/advanced/BlindAuction.ts",
+      "description": "Sealed-bid auction with encrypted bids"
+    },
+    "access-control": {
+      "contract": "contracts/basic/deep-dive/AccessControl.sol",
+      "test": "test/basic/deep-dive/AccessControl.ts",
+      "description": "Demonstrates FHE.allow, allowTransient and allowThis"
+    },
+    "anti-patterns": {
+      "contract": "contracts/basic/deep-dive/AntiPatterns.sol",
+      "test": "test/basic/deep-dive/AntiPatterns.ts",
+      "description": "Common FHEVM mistakes and how to avoid them"
+    },
+    "handle-lifecycle": {
+      "contract": "contracts/basic/deep-dive/HandleLifecycle.sol",
+      "test": "test/basic/deep-dive/HandleLifecycle.ts",
+      "description": "FHE handle creation, derivation and lifecycle"
+    },
+    "input-proofs": {
+      "contract": "contracts/basic/deep-dive/InputProofs.sol",
+      "test": "test/basic/deep-dive/InputProofs.ts",
+      "description": "How input proofs work and why they are essential"
+    },
+    "fhe-eq": {
+      "contract": "contracts/basic/fhe-operations/FHEEq.sol",
+      "test": "test/basic/fhe-operations/FHEEq.ts",
+      "description": "Demonstrates FHE equality comparison"
+    },
+    "fhe-sub": {
+      "contract": "contracts/basic/fhe-operations/FHESub.sol",
+      "test": "test/basic/fhe-operations/FHESub.ts",
+      "description": "Demonstrates FHE subtraction operations"
     }
   },
   "categories": {
@@ -111,6 +146,30 @@
         {
           "path": "contracts/basic/fhe-operations/FHEIfThenElse.sol",
           "test": "test/basic/fhe-operations/FHEIfThenElse.ts"
+        },
+        {
+          "path": "contracts/basic/deep-dive/AccessControl.sol",
+          "test": "test/basic/deep-dive/AccessControl.ts"
+        },
+        {
+          "path": "contracts/basic/deep-dive/AntiPatterns.sol",
+          "test": "test/basic/deep-dive/AntiPatterns.ts"
+        },
+        {
+          "path": "contracts/basic/deep-dive/HandleLifecycle.sol",
+          "test": "test/basic/deep-dive/HandleLifecycle.ts"
+        },
+        {
+          "path": "contracts/basic/deep-dive/InputProofs.sol",
+          "test": "test/basic/deep-dive/InputProofs.ts"
+        },
+        {
+          "path": "contracts/basic/fhe-operations/FHEEq.sol",
+          "test": "test/basic/fhe-operations/FHEEq.ts"
+        },
+        {
+          "path": "contracts/basic/fhe-operations/FHESub.sol",
+          "test": "test/basic/fhe-operations/FHESub.ts"
         }
       ]
     },
@@ -152,6 +211,16 @@
       "name": "Game Examples",
       "description": "Privacy-preserving game implementations using FHEVM",
       "contracts": []
+    },
+    "advanced": {
+      "name": "Advanced Examples",
+      "description": "Advanced examples using FHEVM",
+      "contracts": [
+        {
+          "path": "contracts/advanced/BlindAuction.sol",
+          "test": "test/advanced/BlindAuction.ts"
+        }
+      ]
     }
   },
   "docs": {
@@ -238,6 +307,48 @@
       "description": "Documentation for SwapERC7984ToERC7984",
       "output": "docs/swap-erc7984-to-erc7984.md",
       "category": "Openzeppelin"
+    },
+    "blind-auction": {
+      "title": "Blind Auction",
+      "description": "Documentation for BlindAuction",
+      "output": "docs/blind-auction.md",
+      "category": "Advanced"
+    },
+    "access-control": {
+      "title": "Access Control",
+      "description": "Documentation for AccessControl",
+      "output": "docs/access-control.md",
+      "category": "Basic"
+    },
+    "anti-patterns": {
+      "title": "Anti Patterns",
+      "description": "Documentation for AntiPatterns",
+      "output": "docs/anti-patterns.md",
+      "category": "Basic"
+    },
+    "handle-lifecycle": {
+      "title": "Handle Lifecycle",
+      "description": "Documentation for HandleLifecycle",
+      "output": "docs/handle-lifecycle.md",
+      "category": "Basic"
+    },
+    "input-proofs": {
+      "title": "Input Proofs",
+      "description": "Documentation for InputProofs",
+      "output": "docs/input-proofs.md",
+      "category": "Basic"
+    },
+    "fhe-eq": {
+      "title": "FHE Equality Comparison",
+      "description": "Demonstrates FHE.eq() for comparing encrypted values",
+      "output": "docs/fhe-eq.md",
+      "category": "Basic - FHE Operations"
+    },
+    "fhe-sub": {
+      "title": "FHE Subtraction",
+      "description": "Demonstrates FHE.sub() for subtracting encrypted values",
+      "output": "docs/fhe-sub.md",
+      "category": "Basic - FHE Operations"
     }
   }
 }
