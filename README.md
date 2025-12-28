@@ -2,7 +2,7 @@
 
 A comprehensive system for creating standalone FHEVM (Fully Homomorphic Encryption Virtual Machine) example repositories with automated documentation generation.
 
-## Project Overview
+## | Project Overview
 
 This project provides tools and examples for building privacy-preserving smart contracts using FHEVM by Zama. It includes:
 
@@ -11,7 +11,7 @@ This project provides tools and examples for building privacy-preserving smart c
 - **Automation Tools**: Scripts to generate standalone repositories and documentation
 - **Documentation**: GitBook-formatted guides for each example
 
-## Quick Start
+## | Quick Start
 
 ### 🎯 Interactive CLI (Recommended)
 
@@ -49,48 +49,70 @@ npm run cli:scan
 npm run cli:list
 ```
 
-**Note:** After adding new contracts/tests, run `npm run cli:scan` to automatically update `examples-config.json`.
+### 🔍 Auto-Scan Feature
 
-## Project Structure
+The `cli:scan` command automatically discovers contracts and tests, updating `examples-config.json`:
+
+```bash
+npm run cli:scan
+```
+
+**What it does:**
+- Scans all `.sol` files in `contracts/` directory
+- Finds matching test files automatically
+- Updates `examples-config.json` with new examples
+- Auto-detects categories based on folder structure
+- Generates docs configuration
+- Warns about missing descriptions
+
+**After scanning:**
+1. Check the warnings for examples needing descriptions
+2. Edit `examples-config.json` to fill in missing descriptions
+3. Add category names/descriptions if needed
+
+**Example workflow:**
+```bash
+# 1. Add new contract and test
+# contracts/my-category/MyContract.sol
+# test/my-category/MyContract.ts
+
+# 2. Run scan
+npm run cli:scan
+
+# 3. Fill in descriptions in examples-config.json
+# 4. Done! Your example is ready to use
+```
+
+## | Project Structure
 
 ```
 z-hub/
-├── base-template/               # Base Hardhat template (submodule)
-│   ├── contracts/               # Template contract (FHECounter)
-│   ├── test/                    # Template tests
-│   ├── deploy/                  # Deployment scripts
-│   ├── hardhat.config.ts        # Hardhat configuration
-│   └── package.json             # Dependencies
+├── base-template/          # Base Hardhat template (submodule)
+│   ├── contracts/          # Empty (filled by generator)
+│   ├── test/               # Empty (filled by generator)
+│   ├── deploy/             # Deployment scripts
+│   └── hardhat.config.ts   # Hardhat configuration
 │
-├── contracts/                   # All example contracts (source)
-│   ├── basic/                   # Basic FHE operations
-│   │   ├── FHECounter.sol
-│   │   ├── encrypt/             # Encryption examples
-│   │   ├── decrypt/             # Decryption examples
-│   │   └── fhe-operations/      # FHE operators (add, sub, etc.)
-│   ├── auctions/                # Auction examples
-│   ├── openzeppelin-confidential-contracts/  # ERC7984, tokens
-│   └── fheWordle/               # Game example
+├── contracts/              # All example contracts (source)
+│   ├── basic/              # Basic FHE operations
+│   ├── auctions/           # Auction examples
+│   ├── openzeppelin-*/     # Token examples
+│   └── ...                 # More examples
 │
-├── test/                        # All test files (mirrors contracts/)
-│   ├── basic/
-│   ├── blindAuction/
-│   └── ...
+├── test/                   # All test files (mirrors contracts/)
 │
-├── examples/                    # Generated GitBook documentation
-│   ├── SUMMARY.md               # Documentation index
-│   └── *.md                     # Individual example docs
+├── scripts/                # CLI and automation tools
+│   ├── cli.ts              # Main CLI interface
+│   ├── scan.ts             # Auto-discovery tool
+│   ├── create-fhevm-example.ts
+│   ├── create-fhevm-category.ts
+│   └── generate-docs.ts
 │
-├── scripts/                     # Automation tools
-│   ├── create-fhevm-example.js  # Repository generator
-│   ├── generate-docs.js         # Documentation generator
-│   └── README.md                # Scripts documentation
-│
-├── CLAUDE.md                    # Claude Code guidance
-└── README.md                    # This file
+├── examples-config.json    # Central configuration
+└── README.md               # This file
 ```
 
-## Available Examples
+## | Available Examples
 
 ### Basic Examples
 - **fhe-counter** - Simple encrypted counter demonstrating FHE basics
@@ -108,7 +130,7 @@ z-hub/
 ### OpenZeppelin Integration
 - **erc7984-example** - Confidential token standard implementation
 
-## Core Concepts
+## | Core Concepts
 
 ### FHEVM Encryption Model
 
@@ -118,126 +140,78 @@ FHEVM uses encryption binding where values are bound to `[contract, user]` pairs
 2. **Input Proofs**: Zero-knowledge proofs attest correct binding
 3. **Permission System**: Both contract and user need FHE permissions
 
-### Critical Patterns
 
-**✅ DO: Grant Both Permissions**
-```solidity
-FHE.allowThis(encryptedValue);        // Contract permission
-FHE.allow(encryptedValue, msg.sender); // User permission
-```
+## | Adding New Examples
 
-**❌ DON'T: Forget allowThis**
-```solidity
-FHE.allow(encryptedValue, msg.sender); // Missing allowThis - will fail!
-```
+### Quick Method (Recommended)
 
-**✅ DO: Match Encryption Signer**
-```typescript
-const enc = await fhevm.createEncryptedInput(contractAddr, alice.address)
-    .add32(123).encrypt();
-await contract.connect(alice).operate(enc.handles[0], enc.inputProof);
-```
-
-**❌ DON'T: Mismatch Signer**
-```typescript
-const enc = await fhevm.createEncryptedInput(contractAddr, alice.address)
-    .add32(123).encrypt();
-await contract.connect(bob).operate(enc.handles[0], enc.inputProof); // Fails!
-```
-
-## Development Workflow
-
-### Creating a New Example
-
-1. **Write Contract** in `contracts/<category>/YourExample.sol`
-   - Include detailed comments explaining FHE concepts
-   - Show both correct usage and common pitfalls
-
-2. **Write Tests** in `test/<category>/YourExample.ts`
-   - Include success and failure cases
-   - Use ✅/❌ markers for clarity
-   - Add explanatory comments
-
-3. **Update Script Configurations**
-   - Add to `EXAMPLES_MAP` in `scripts/create-fhevm-example.js`
-   - Add to `EXAMPLES_CONFIG` in `scripts/generate-docs.js`
-
-4. **Generate Documentation**
-   ```bash
-   node scripts/generate-docs.js your-example
+1. **Create your contract and test:**
+   ```
+   contracts/my-category/MyContract.sol
+   test/my-category/MyContract.ts
    ```
 
-5. **Test Standalone Repository**
+2. **Run auto-scan:**
    ```bash
-   node scripts/create-fhevm-example.js your-example ./test-output
+   npm run cli:scan
+   ```
+
+3. **Fill in descriptions:**
+   - Open `examples-config.json`
+   - Add description for your new example
+   - Add category name/description if it's a new category
+
+4. **Test it:**
+   ```bash
+   npm run cli:create my-contract ./test-output
    cd test-output
-   npm install && npm run compile && npm run test
+   npm install && npm test
    ```
 
-### Testing in the Base Template
+That's it! Your example is ready to use.
+
+### Manual Method
+
+If you prefer manual configuration, edit `examples-config.json` directly:
+
+```json
+{
+  "examples": {
+    "my-example": {
+      "contract": "contracts/my-category/MyContract.sol",
+      "test": "test/my-category/MyContract.ts",
+      "description": "Your description here"
+    }
+  }
+}
+```
+
+## | CLI Commands Reference
+
+All commands use the modern CLI interface:
 
 ```bash
-cd base-template/
-
-# Copy your contract and test
-cp ../contracts/basic/YourExample.sol contracts/
-cp ../test/basic/YourExample.ts test/
-
-# Test
-npm run compile
-npm run test
-npm run lint
+npm run cli              # Interactive menu
+npm run cli:create       # Create example project
+npm run cli:category     # Create category project
+npm run cli:docs         # Generate documentation
+npm run cli:list         # List all examples
+npm run cli:scan         # Auto-discover contracts
+npm run help             # Show help
 ```
 
-## Automation Tools
+## | Configuration
 
-### create-fhevm-example.js
+### examples-config.json
 
-Generates complete standalone repositories for **single examples**:
-- Clones base template
-- Copies contract and test files
-- Updates configuration
-- Generates README
-- Creates deployment scripts
+Central configuration file containing:
+- **examples**: All available examples with contract/test paths
+- **categories**: Grouped examples by category
+- **docs**: Documentation generation settings
 
-[See scripts/README.md for details](scripts/README.md)
+This file is automatically updated by `npm run cli:scan`.
 
-### create-fhevm-category.js
-
-Generates projects with **multiple examples from a category**:
-- Copies all contracts from a category (basic, auctions, etc.)
-- Includes all corresponding tests
-- Generates unified deployment script
-- Creates comprehensive README
-- Perfect for learning multiple related concepts
-
-**Categories:**
-- **basic** (9 contracts) - Encryption, decryption, FHE operations
-- **auctions** (2 contracts) - Blind auction, Dutch auction
-- **openzeppelin** (4 contracts) - ERC7984, token wrappers, swaps
-- **games** (2 contracts) - FHEWordle
-
-[See scripts/README.md for details](scripts/README.md)
-
-### generate-docs.js
-
-Creates GitBook documentation:
-- Extracts contract/test code
-- Generates formatted markdown
-- Updates SUMMARY.md index
-- Organizes by category
-
-[See scripts/README.md for details](scripts/README.md)
-
-## Key Dependencies
-
-- `@fhevm/solidity` (v0.9.1) - Core FHEVM Solidity library
-- `@fhevm/hardhat-plugin` (v0.3.0-1) - FHEVM testing integration
-- `@zama-fhe/relayer-sdk` - Decryption relayer SDK
-- `hardhat-deploy` - Deployment management
-- `encrypted-types` - TypeScript encrypted type support
-
-## Resources
+## | Resources
 
 - **FHEVM Docs**: https://docs.zama.ai/fhevm
 - **Protocol Examples**: https://docs.zama.org/protocol/examples
@@ -245,57 +219,14 @@ Creates GitBook documentation:
 - **Live dApps**: https://github.com/zama-ai/dapps
 - **OpenZeppelin Confidential**: https://github.com/OpenZeppelin/openzeppelin-confidential-contracts
 
-## Maintenance
 
-### Updating Dependencies
+## | Contributing
 
-When `@fhevm/solidity` releases a new version:
+Contributions are welcome! To add a new example:
 
-1. **Update Base Template**
-   ```bash
-   cd fhevm-hardhat-template/
-   npm install @fhevm/solidity@latest
-   npm run compile
-   npm run test
-   ```
-
-2. **Test All Examples**
-   - Regenerate a few key examples
-   - Ensure they compile and pass tests
-   - Update if breaking changes exist
-
-3. **Update Documentation**
-   - Regenerate docs if APIs changed
-   - Update CLAUDE.md with new patterns
-
-### Bulk Operations
-
-```bash
-# Regenerate all documentation
-node scripts/generate-docs.js --all
-
-# Test multiple examples
-for example in fhe-counter encrypt-single-value user-decrypt-single-value; do
-  node scripts/create-fhevm-example.js $example ./test-output/$example
-  cd ./test-output/$example && npm install && npm test && cd ../..
-done
-```
-
-## Contributing
-
-Contributions are welcome! When adding examples:
-
-1. Follow existing patterns and structure
-2. Include comprehensive comments in code
-3. Demonstrate both correct and incorrect usage
-4. Update both automation scripts
-5. Test generated standalone repository
-6. Verify documentation renders correctly
-
-## License
-
-BSD-3-Clause-Clear License - See LICENSE file
-
----
-
-**Built with ❤️ using [FHEVM](https://github.com/zama-ai/fhevm) by Zama**
+1. Create contract in `contracts/<category>/YourContract.sol`
+2. Create test in `test/<category>/YourContract.ts`
+3. Run `npm run cli:scan`
+4. Fill in the description in `examples-config.json`
+5. Test with `npm run cli:create your-contract ./test`
+6. Submit a pull request

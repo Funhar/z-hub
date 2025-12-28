@@ -295,6 +295,8 @@ function scanExamples(): void {
   }
 
   // Save updated config
+  fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n");
+
   // Summary
   console.log(chalk.cyan.bold("\n" + "=".repeat(60)));
   console.log(chalk.cyan.bold("Scan Complete!"));
