@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=FFD20A&height=250&section=header&text=Z-Hub&fontSize=80&animation=fadeIn&fontAlignY=35&desc=FHEVM%20Examples%20Generator&descAlignY=55&descAlign=50" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=FFD20A&height=200&section=header&text=Z-Hub&fontSize=80&animation=fadeIn&fontAlignY=35&desc=FHEVM%20Examples%20Generator&descAlignY=55&descAlign=50" />
 </p>
 
 <p align="center">
@@ -21,8 +21,25 @@
 | **Smart Scaffolding**: Automated project creation from source.   | **2. Contract Injection**: Selectively inject code & tests. |
 | **Auto-Documentation**: Instant GitBook-ready guide generation.  | **3. Standalone Output**: Isolated, ready-to-deploy repos.  |
 
+<p align="center">
+  <img src="./preview.svg" width="100%" alt="Z-Hub Demo">
+</p>
+
+![Coding Animation](https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif)
+
 
 ## | Quick Start
+
+### 🚀 Installation & Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/Funhar/z-hub.git
+cd z-hub
+
+# Install dependencies
+npm install
+```
 
 ### 🎯 Interactive CLI (Recommended)
 
@@ -292,3 +309,5 @@ Contributions are welcome! To add a new example:
 4. Fill in the description in `examples-config.json`
 5. Test with `npm run cli:create your-contract ./test`
 6. Submit a pull request
+
+<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" width="100%">
