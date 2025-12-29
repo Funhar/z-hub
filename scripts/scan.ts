@@ -10,7 +10,9 @@ import * as fs from "fs";
 import * as path from "path";
 import {
   theme,
+  colors,
   zamaGradient,
+  createHeader,
   createResultBox,
   createWarningBox,
 } from "./utils/theme";
@@ -168,7 +170,7 @@ function scanExamples(): void {
   const rootDir = path.resolve(__dirname, "..");
   const configPath = path.join(rootDir, "examples-config.json");
 
-  console.log(zamaGradient("\n🔍 Scanning for contracts and tests...\n"));
+  console.log(createHeader("🔎 Example Repository Scanner", colors.teal));
 
   // Load existing config
   let config: Config;
@@ -177,7 +179,7 @@ function scanExamples(): void {
     config = JSON.parse(configContent);
   } catch {
     console.log(
-      theme.warning("⚠️  examples-config.json not found, creating new one...")
+      theme.warning("\n⚠️  examples-config.json not found, creating new one...")
     );
     config = { examples: {}, categories: {}, docs: {} };
   }
@@ -186,7 +188,9 @@ function scanExamples(): void {
   const contractsDir = path.join(rootDir, "contracts");
   const contractFiles = findSolFiles(contractsDir, rootDir);
 
-  console.log(theme.info(`Found ${contractFiles.length} contract files\n`));
+  console.log(
+    theme.info(`\n📂 Found ${theme.bold(contractFiles.length)} contract files`)
+  );
 
   let newCount = 0;
   let updatedCount = 0;

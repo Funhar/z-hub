@@ -11,6 +11,13 @@
 import * as fs from "fs";
 import * as path from "path";
 import chalk from "chalk";
+import {
+  theme,
+  colors,
+  createHeader,
+  createResultBox,
+  createWarningBox,
+} from "./utils/theme";
 
 interface ValidationResult {
   errors: string[];
@@ -46,7 +53,7 @@ function loadConfig(): ExamplesConfig | null {
 function validateFileConsistency(config: ExamplesConfig): ValidationResult {
   const result: ValidationResult = { errors: [], warnings: [] };
 
-  console.log(chalk.cyan("\n📁 File Consistency"));
+  console.log(theme.info(`\n${theme.bold("📁 File Consistency")}`));
 
   let contractCount = 0;
   let testCount = 0;
@@ -75,14 +82,14 @@ function validateFileConsistency(config: ExamplesConfig): ValidationResult {
   }
 
   if (missingContracts === 0 && missingTests === 0) {
-    console.log(chalk.green(`  ✅ ${contractCount} contracts found`));
-    console.log(chalk.green(`  ✅ ${testCount} tests found`));
+    console.log(theme.success(`  ✅ ${contractCount} contracts found`));
+    console.log(theme.success(`  ✅ ${testCount} tests found`));
   } else {
     if (missingContracts > 0) {
-      console.log(chalk.red(`  ❌ ${missingContracts} missing contracts`));
+      console.log(theme.error(`  ❌ ${missingContracts} missing contracts`));
     }
     if (missingTests > 0) {
-      console.log(chalk.red(`  ❌ ${missingTests} missing tests`));
+      console.log(theme.error(`  ❌ ${missingTests} missing tests`));
     }
   }
 
@@ -93,7 +100,7 @@ function validateFileConsistency(config: ExamplesConfig): ValidationResult {
 function validateConfig(config: ExamplesConfig): ValidationResult {
   const result: ValidationResult = { errors: [], warnings: [] };
 
-  console.log(chalk.cyan("\n📋 Config Validation"));
+  console.log(theme.info(`\n${theme.bold("📋 Config Validation")}`));
 
   // Check for missing descriptions
   let missingDescriptions = 0;
@@ -105,10 +112,12 @@ function validateConfig(config: ExamplesConfig): ValidationResult {
   }
 
   if (missingDescriptions === 0) {
-    console.log(chalk.green(`  ✅ All examples have descriptions`));
+    console.log(theme.success(`  ✅ All examples have descriptions`));
   } else {
     console.log(
-      chalk.yellow(`  ⚠️  ${missingDescriptions} examples missing descriptions`)
+      theme.warning(
+        `  ⚠️  ${missingDescriptions} examples missing descriptions`
+      )
     );
   }
 
@@ -122,19 +131,19 @@ function validateConfig(config: ExamplesConfig): ValidationResult {
   if (orphanedDocs.length > 0) {
     result.warnings.push(`Orphaned docs entries: ${orphanedDocs.join(", ")}`);
     console.log(
-      chalk.yellow(`  ⚠️  ${orphanedDocs.length} orphaned docs entries`)
+      theme.warning(`  ⚠️  ${orphanedDocs.length} orphaned docs entries`)
     );
   }
 
   if (missingDocs.length > 0) {
     result.warnings.push(`Missing docs entries: ${missingDocs.join(", ")}`);
     console.log(
-      chalk.yellow(`  ⚠️  ${missingDocs.length} missing docs entries`)
+      theme.warning(`  ⚠️  ${missingDocs.length} missing docs entries`)
     );
   }
 
   if (orphanedDocs.length === 0 && missingDocs.length === 0) {
-    console.log(chalk.green(`  ✅ Examples and docs are in sync`));
+    console.log(theme.success(`  ✅ Examples and docs are in sync`));
   }
 
   // Check categories have valid paths
@@ -152,10 +161,10 @@ function validateConfig(config: ExamplesConfig): ValidationResult {
   }
 
   if (invalidCategoryPaths === 0) {
-    console.log(chalk.green(`  ✅ All category paths valid`));
+    console.log(theme.success(`  ✅ All category paths valid`));
   } else {
     console.log(
-      chalk.red(`  ❌ ${invalidCategoryPaths} invalid category paths`)
+      theme.error(`  ❌ ${invalidCategoryPaths} invalid category paths`)
     );
   }
 
@@ -166,7 +175,7 @@ function validateConfig(config: ExamplesConfig): ValidationResult {
 function validateSolidity(config: ExamplesConfig): ValidationResult {
   const result: ValidationResult = { errors: [], warnings: [] };
 
-  console.log(chalk.cyan("\n🔧 Solidity Checks"));
+  console.log(theme.info(`\n${theme.bold("🔧 Solidity Checks")}`));
 
   let validContracts = 0;
   let missingLicense = 0;
@@ -207,20 +216,22 @@ function validateSolidity(config: ExamplesConfig): ValidationResult {
   }
 
   if (missingLicense === 0) {
-    console.log(chalk.green(`  ✅ All contracts have SPDX license`));
+    console.log(theme.success(`  ✅ All contracts have SPDX license`));
   } else {
     console.log(
-      chalk.yellow(`  ⚠️  ${missingLicense} contracts missing SPDX license`)
+      theme.warning(`  ⚠️  ${missingLicense} contracts missing SPDX license`)
     );
   }
 
   if (nameMismatch === 0) {
-    console.log(chalk.green(`  ✅ Contract names match file names`));
+    console.log(theme.success(`  ✅ Contract names match file names`));
   } else {
-    console.log(chalk.yellow(`  ⚠️  ${nameMismatch} contract name mismatches`));
+    console.log(
+      theme.warning(`  ⚠️  ${nameMismatch} contract name mismatches`)
+    );
   }
 
-  console.log(chalk.green(`  ✅ ${validContracts} contracts validated`));
+  console.log(theme.success(`  ✅ ${validContracts} contracts validated`));
 
   return result;
 }
@@ -229,7 +240,7 @@ function validateSolidity(config: ExamplesConfig): ValidationResult {
 function validateDocumentation(config: ExamplesConfig): ValidationResult {
   const result: ValidationResult = { errors: [], warnings: [] };
 
-  console.log(chalk.cyan("\n📝 Documentation"));
+  console.log(theme.info(`\n${theme.bold("📝 Documentation")}`));
 
   const docsDir = path.join(ROOT_DIR, "docs");
   const summaryPath = path.join(docsDir, "SUMMARY.md");
@@ -237,7 +248,7 @@ function validateDocumentation(config: ExamplesConfig): ValidationResult {
   // Check SUMMARY.md exists
   if (!fs.existsSync(summaryPath)) {
     result.errors.push("SUMMARY.md not found");
-    console.log(chalk.red(`  ❌ SUMMARY.md not found`));
+    console.log(theme.error(`  ❌ SUMMARY.md not found`));
     return result;
   }
 
@@ -258,9 +269,9 @@ function validateDocumentation(config: ExamplesConfig): ValidationResult {
   }
 
   if (missingDocFiles === 0) {
-    console.log(chalk.green(`  ✅ ${presentDocFiles} doc files present`));
+    console.log(theme.success(`  ✅ ${presentDocFiles} doc files present`));
   } else {
-    console.log(chalk.yellow(`  ⚠️  ${missingDocFiles} doc files missing`));
+    console.log(theme.warning(`  ⚠️  ${missingDocFiles} doc files missing`));
   }
 
   // Check SUMMARY.md has all entries
@@ -274,10 +285,10 @@ function validateDocumentation(config: ExamplesConfig): ValidationResult {
   }
 
   if (missingInSummary === 0) {
-    console.log(chalk.green(`  ✅ SUMMARY.md is up to date`));
+    console.log(theme.success(`  ✅ SUMMARY.md is up to date`));
   } else {
     console.log(
-      chalk.yellow(`  ⚠️  ${missingInSummary} entries missing from SUMMARY.md`)
+      theme.warning(`  ⚠️  ${missingInSummary} entries missing from SUMMARY.md`)
     );
   }
 
@@ -286,18 +297,17 @@ function validateDocumentation(config: ExamplesConfig): ValidationResult {
 
 // Main validation function
 export function validate(): { errors: number; warnings: number } {
-  console.log(chalk.bold.cyan("\n🔍 Validating project...\n"));
-  console.log(chalk.gray("=".repeat(50)));
+  console.log(createHeader("🔍 Project Consistency Validator", colors.sky));
 
   // Load and validate JSON
   const config = loadConfig();
   if (!config) {
-    console.log(chalk.red("\n❌ Failed to load examples-config.json"));
-    console.log(chalk.red("   Please check JSON syntax"));
+    console.log(theme.error("\n❌ Failed to load examples-config.json"));
+    console.log(theme.error("   Please check JSON syntax"));
     return { errors: 1, warnings: 0 };
   }
 
-  console.log(chalk.green("  ✅ JSON valid"));
+  console.log(theme.success("  ✅ JSON structure valid"));
 
   // Run all validations
   const results: ValidationResult[] = [];
@@ -311,33 +321,32 @@ export function validate(): { errors: number; warnings: number } {
   const totalErrors = results.reduce((sum, r) => sum + r.errors.length, 0);
   const totalWarnings = results.reduce((sum, r) => sum + r.warnings.length, 0);
 
-  console.log(chalk.gray("\n" + "=".repeat(50)));
+  const summary = [
+    `Total Checks:  ${theme.bold("4 main categories")}`,
+    `Total Errors:  ${
+      totalErrors > 0 ? theme.error(totalErrors) : theme.success("0")
+    }`,
+    `Total Warnings: ${
+      totalWarnings > 0 ? theme.warning(totalWarnings) : theme.success("0")
+    }`,
+  ].join("\n");
+
+  console.log(
+    createResultBox(summary, "🏁 Validation Summary", totalErrors > 0)
+  );
+
+  if (totalErrors > 0) {
+    const errorList = results.flatMap((r) => r.errors);
+    console.log(createWarningBox(errorList, "❌ Critical Errors"));
+  }
+
+  if (totalWarnings > 0) {
+    const warningList = results.flatMap((r) => r.warnings);
+    console.log(createWarningBox(warningList, "⚠️ Warnings"));
+  }
 
   if (totalErrors === 0 && totalWarnings === 0) {
-    console.log(chalk.bold.green("\n✅ Validation passed! No issues found.\n"));
-  } else {
-    console.log(
-      chalk.bold(
-        `\nResult: ${chalk.red(totalErrors + " errors")}, ${chalk.yellow(
-          totalWarnings + " warnings"
-        )}\n`
-      )
-    );
-
-    if (totalErrors > 0) {
-      console.log(chalk.red("Errors:"));
-      results.forEach((r) =>
-        r.errors.forEach((e) => console.log(chalk.red(`  • ${e}`)))
-      );
-    }
-
-    if (totalWarnings > 0) {
-      console.log(chalk.yellow("\nWarnings:"));
-      results.forEach((r) =>
-        r.warnings.forEach((w) => console.log(chalk.yellow(`  • ${w}`)))
-      );
-    }
-    console.log("");
+    console.log(theme.success("\n✨ Project is in perfect shape!\n"));
   }
 
   return { errors: totalErrors, warnings: totalWarnings };
