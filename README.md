@@ -22,7 +22,7 @@
 | **Auto-Documentation**: Instant GitBook-ready guide generation.  | **3. Standalone Output**: Isolated, ready-to-deploy repos.  |
 
 <p align="center">
-  <img src="./preview.svg" width="100%" alt="Z-Hub Demo">
+  <img src="https://gist.githubusercontent.com/Funhar/f5368418b26d4dd1373c8a26bb698394/raw/fb5e3676be8295fb502b05c3efa6f7592ad4869a/preview.svg" width="100%" alt="Z-Hub Demo">
 </p>
 
 ![Coding Animation](https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif)
