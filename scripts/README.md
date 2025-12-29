@@ -1,263 +1,190 @@
-# FHEVM Example Generator Scripts
+# ⚙️ Z-Hub Automation Engine
 
-This directory contains automation scripts for generating standalone FHEVM example repositories and documentation.
+This directory contains the core logic and scripts that power the FHEVM Example Generator. All scripts are written in **TypeScript** for type safety and maintainability.
 
-## Scripts Overview
+---
 
-### 1. `create-example.js` - Single Example Generator
+## | Core Entry Point
 
-Generates a complete, standalone FHEVM example repository from the base template.
-
-**Usage:**
-```bash
-ts-node scripts/create-example.ts <example-name> [output-dir]
-```
-
-**Features:**
-- Clones the `fhevm-hardhat-template/` base template
-- Copies specified contract from `contracts/`
-- Copies corresponding test from `test/`
-- Updates deployment scripts with correct contract name
-- Generates example-specific README.md
-- Updates package.json with example metadata
-- Creates a ready-to-use, standalone repository
-
-**Available Examples:**
-- `fhe-counter` - Basic encrypted counter
-- `encrypt-single-value` - Single value encryption
-- `encrypt-multiple-values` - Multiple value encryption
-- `user-decrypt-single-value` - User decryption single
-- `user-decrypt-multiple-values` - User decryption multiple
-- `public-decrypt-single-value` - Public decryption single
-- `public-decrypt-multiple-values` - Public decryption multiple
-- `fhe-add` - FHE addition operations
-- `fhe-if-then-else` - FHE conditional operations
-- `blind-auction` - Sealed-bid auction
-- `confidential-dutch-auction` - Dutch auction with encryption
-- `erc7984-example` - ERC7984 confidential token
-
-**Example:**
-```bash
-# Generate fhe-counter example
-ts-node scripts/create-example.ts fhe-counter ./output/fhe-counter-example
-
-# Navigate to generated example
-cd output/fhe-counter-example
-
-# Install and test
-npm install
-npm run compile
-npm run test
-```
-
-### 2. `create-category.js` - Category Project Generator
-
-Generates a project containing all examples from a specific category.
+### `cli.ts` - The Command Router
+This is the primary interface for all Z-Hub operations. It acts as a router, offloading specific tasks up to specialized scripts.
 
 **Usage:**
 ```bash
-ts-node scripts/create-category.ts <category> [output-dir]
+# Interactive menu
+ts-node scripts/cli.ts
+
+# Command router
+ts-node scripts/cli.ts create
+ts-node scripts/cli.ts category
 ```
 
-**Features:**
-- Copies all contracts from a category
-- Includes all corresponding tests
-- Generates unified deployment script for all contracts
-- Creates comprehensive README listing all examples
-- Perfect for learning multiple related concepts at once
+---
 
-**Available Categories:**
-- `basic` - 9 contracts (FHE operations, encryption, decryption)
-- `auctions` - 2 contracts (Blind auction, Dutch auction)
-- `openzeppelin` - 4 contracts (ERC7984, token wrappers, swaps)
-- `games` - 2 contracts (FHEWordle)
+## | Main Automation Scripts
 
-**Example:**
-```bash
-# Generate basic examples project
-ts-node scripts/create-category.ts basic ./output/basic-examples
+### 1. `scan.ts` - The Discovery Engine
+The pulse of the project. It automatically scans the `contracts/` and `test/` directories to detect new examples.
+- **Function**: Automatically updates `examples-config.json`.
+- **Logic**: Matches `.sol` files with their `.ts` counterparts.
+- **Usage**:
+  ```bash
+  ts-node scripts/scan.ts
+  ```
 
-# Navigate and test
-cd output/basic-examples
-npm install
-npm run compile
-npm run test
+### 2. `create-example.ts` - Smart Scaffolder (Single)
+Generates a standalone, ready-to-use Hardhat project for a specific example.
+- **Usage**:
+  ```bash
+  # Plain usage (Interactive via cli selector)
+  ts-node scripts/create-example.ts
+
+  # Parameterized usage
+  ts-node scripts/create-example.ts fhe-counter ./output/my-fhe-app
+  ```
+
+### 3. `create-category.ts` - Smart Scaffolder (Category)
+Bundles **all** examples from a specific category into one workspace.
+- **Usage**:
+  ```bash
+  # Plain usage
+  ts-node scripts/create-category.ts
+
+  # Parameterized usage
+  ts-node scripts/create-category.ts basic ./output/basic-library
+  ```
+
+### 4. `generate-docs.ts` - Documentation Engine
+Extracts technical details and comments from contracts to generate beautiful GitBook-formatted guides.
+- **Usage**:
+  ```bash
+  # Plain usage (All examples)
+  ts-node scripts/generate-docs.ts --all
+
+  # Parameterized usage (Targeted)
+  ts-node scripts/generate-docs.ts fhe-counter
+  ```
+
+---
+
+## | Utility & Maintenance
+
+### `run-tests.ts` - Example Verifier
+An internal tool that validates examples by spinning up ephemeral projects and executing their tests.
+- **Usage**:
+  ```bash
+  # Plain usage (Interactive selector)
+  ts-node scripts/run-tests.ts
+
+  # Parameterized usage
+  ts-node scripts/run-tests.ts fhe-counter
+  ```
+
+### `validate.ts` - System Health Check
+Validates the integrity of `examples-config.json` and ensures all referenced files exist.
+- **Usage**:
+  ```bash
+  ts-node scripts/validate.ts
+  ```
+
+---
+
+## | Configuration & The Manifest
+
+The `examples-config.json` file in the root directory is the **Source of Truth** for the entire system. Every script relies on this manifest to understand what examples exist and where they are located.
+
+### 🧩 Schema Breakdown
+
+```json
+{
+  "examples": {
+    "fhe-counter": {
+      "contract": "path/to/Contract.sol",
+      "test": "path/to/Test.ts",
+      "description": "Educational summary of the example"
+    }
+  },
+  "categories": {
+    "basic": {
+      "name": "Display Name",
+      "description": "Category overview",
+      "contracts": [{ "path": "...", "test": "..." }]
+    }
+  }
+}
 ```
 
-### 3. `generate-docs.js` - Documentation Generator
+### 🔄 The Automation Flow
 
-Generates GitBook-formatted documentation from contract and test files.
+1.  **Detection**: `scan.ts` traverses the filesystem. When it finds a `.sol` / `.ts` pair, it updates the `examples` and `categories` objects.
+2.  **Consumption**:
+    - `create-example.ts` reads the paths to know what to copy.
+    - `generate-docs.ts` uses the `description` for the intro text.
+    - `run-tests.ts` uses it to know which tests to execute.
 
-**Usage:**
-```bash
-node scripts/generate-docs.js <example-name>
-node scripts/generate-docs.js --all
-```
+> [!TIP]
+> While `scan.ts` handles the heavy lifting of path mapping, human intervention is required to write high-quality **descriptions** in the JSON to ensure the generated documentation remains helpful.
 
-**Features:**
-- Extracts contract and test code
-- Generates GitBook markdown with tabs
-- Creates side-by-side contract/test view
-- Auto-updates `examples/SUMMARY.md`
-- Includes hints and proper formatting
+---
 
-**Example:**
-```bash
-# Generate docs for single example
-ts-node scripts/generate-docs.ts fhe-counter
+## | Infrastructure Structure
 
-# Generate all documentation
-ts-node scripts/generate-docs.ts --all
-```
-
-**Output Format:**
-The generator creates GitBook-compatible markdown files in `examples/` with:
-- Description and info hints
-- Tabbed interface for contract and test code
-- Proper syntax highlighting
-- Organized by category in SUMMARY.md
-
-## Development Workflow
-
-### Creating a New Example
-
-1. **Write the contract** in `contracts/<category>/`
-   ```solidity
-   // contracts/basic/MyExample.sol
-   contract MyExample is SepoliaConfig {
-       // Implementation with detailed comments
-   }
-   ```
-
-2. **Write comprehensive tests** in `test/<category>/`
-   ```typescript
-   // test/basic/MyExample.ts
-   describe("MyExample", function () {
-       // Tests with explanatory comments
-       // Include both success and failure cases
-   });
-   ```
-
-3. **Add to script configurations**
-   - Update `EXAMPLES_MAP` in `create-example.ts`
-   - Update `EXAMPLES_CONFIG` in `generate-docs.ts`
-
-4. **Generate documentation**
-   ```bash
-   ts-node scripts/generate-docs.ts my-example
-   ```
-
-5. **Create standalone repo**
-   ```bash
-   ts-node scripts/create-example.ts my-example ./output/my-example
-   ```
-
-### Testing Generated Examples
-
-Always test that generated examples work:
-```bash
-cd output/my-example
-npm install
-npm run compile
-npm run test
-npm run lint
-```
-
-## File Structure
-
-```
+```text
 scripts/
-├── README.md                    # This file
-├── create-example.ts     # Repository generator (TypeScript)
-├── create-category.ts    # Category project generator (TypeScript)
-└── generate-docs.ts            # Documentation generator (TypeScript)
+├── utils/               # Shared logic
+│   ├── cli-common.ts    # Reusable CLI helpers (spinners, help menus)
+│   └── theme.ts         # Zama-themed visuals (gradients, colors)
+│
+├── workflows/           # UX Layers
+│   └── interactive.ts   # Implementation of the interactive menu flows
+│
+├── cli.ts               # Main Router
+├── scan.ts              # Logic for auto-discovery
+├── create-example.ts    # Scaffolding logic (Single)
+├── create-category.ts   # Scaffolding logic (Category)
+├── generate-docs.ts     # Documentation generator
+├── run-tests.ts         # Internal test runner
+└── validate.ts          # Config validator
 ```
 
-**Note:** All scripts are written in TypeScript for better type safety and maintainability.
+---
 
-## Configuration
+## 💡 Developer Workflow (CLI Shortcodes)
 
-All scripts use TypeScript configuration objects that map example names to their source files:
+While you can run scripts directly via `ts-node`, the following `npm` shortcodes are provided for convenience:
 
-**create-example.ts:**
-```typescript
-interface ExampleConfig {
-  contract: string;
-  test: string;
-  testFixture?: string;
-  description: string;
-}
+1. **Add new code** to `contracts/` and `test/`.
+2. **Scan**: `npm run cli:scan`
+3. **Describe**: Add a summary to `examples-config.json`.
+4. **Verify**: `npm run cli:test <id>`
 
-const EXAMPLES_MAP: Record<string, ExampleConfig> = {
-  'example-name': {
-    contract: 'path/to/contract.sol',
-    test: 'path/to/test.ts',
-    testFixture: 'path/to/fixture.ts',  // Optional
-    description: 'Short description',
-  },
-  // ...
-};
-```
+---
 
-**generate-docs.ts:**
-```typescript
-interface DocsConfig {
-  title: string;
-  description: string;
-  contract: string;
-  test: string;
-  output: string;
-  category: string;
-}
+## | Notes for Contributors
+- **Config First**: Always use `examples-config.json` rather than hardcoding paths.
+- **Base Template**: Run `validate` after changing the template to ensure backward compatibility.
+- **Visuals**: Use `utils/theme.ts` for consistent text styling.
 
-const EXAMPLES_CONFIG: Record<string, DocsConfig> = {
-  'example-name': {
-    title: 'Display Title',
-    description: 'Full description for docs',
-    contract: 'path/to/contract.sol',
-    test: 'path/to/test.ts',
-    output: 'examples/output-file.md',
-    category: 'Category Name',
-  },
-  // ...
-};
-```
+---
 
-## Contributing
+## 🔍 Troubleshooting
 
-When adding new examples:
-1. Ensure contracts include detailed comments explaining FHE concepts
-2. Tests should demonstrate both correct usage and common pitfalls
-3. Use ✅/❌ markers to highlight good vs bad patterns
-4. Update both script configurations
-5. Test the generated standalone repository
-6. Verify documentation renders correctly in GitBook
+### 1. `scan.ts` doesn't find my new example
+The discovery engine expects a matching pair:
+- **Contract**: `contracts/category/YourFeature.sol`
+- **Test**: `test/category/YourFeature.ts`
+If the filenames don't match exactly (case-sensitive), it won't be indexed.
 
-## Maintenance
+### 2. Generated projects fail to compile/test
+- Ensure you have run `npm install` in the **root** folder first.
+- Check if your new contract uses experimental features not supported by the current `fhevm` version in `base-template`.
+- Run `npm run cli:validate` to catch broken paths early.
 
-When updating `@fhevm/solidity` or other dependencies:
-1. Update the base template in `fhevm-hardhat-template/`
-2. Regenerate all examples to ensure compatibility
-3. Update documentation if APIs have changed
-4. Test all generated examples compile and pass tests
+### 3. Tests are timing out
+FHE compute is intensive. If `run-tests.ts` fails during the "Running tests..." phase, it might be due to the default timeout. The internal runner uses a 5-minute timeout, which should be sufficient for most examples.
 
+### 4. Node.js Version
+Ensure you are using **Node.js >= 20**. Use `nvm` if needed:
 ```bash
-# Quick regeneration of all docs
-ts-node scripts/generate-docs.ts --all
+nvm use 20
 ```
-
-## Troubleshooting
-
-**Contract name extraction fails:**
-- Ensure contract declaration is on its own line
-- Format: `contract ContractName is BaseContract {`
-
-**Generated example doesn't compile:**
-- Check that all dependencies are in base template
-- Verify import paths are correct
-- Ensure no template-specific files are referenced
-
-**Documentation missing in SUMMARY.md:**
-- Check category name matches existing categories
-- Verify output path is in `examples/` directory
-- Run generator again without `--no-summary` flag

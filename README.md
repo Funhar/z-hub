@@ -1,15 +1,26 @@
-# Z-Hub FHEVM Examples Generator
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=FFD20A&height=250&section=header&text=Z-Hub&fontSize=80&animation=fadeIn&fontAlignY=35&desc=FHEVM%20Examples%20Generator&descAlignY=55&descAlign=50" />
+</p>
 
-A comprehensive system for creating standalone FHEVM (Fully Homomorphic Encryption Virtual Machine) example repositories with automated documentation generation.
+<p align="center">
+  <a href="https://spdx.org/licenses/BSD-3-Clause-Clear.html"><img src="https://img.shields.io/badge/License-BSD--3--Clause--Clear-blue.svg" alt="License"></a>
+  <a href="https://docs.zama.ai/fhevm"><img src="https://img.shields.io/badge/FHEVM-Zama-orange" alt="FHEVM"></a>
+  <a href="https://hardhat.org/"><img src="https://img.shields.io/badge/Framework-Hardhat-yellow" alt="Hardhat"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/Language-TypeScript-blue" alt="TypeScript"></a>
+</p>
 
-## | Project Overview
+<p align="center">
+  <b>A comprehensive system for creating standalone FHEVM example repositories with automated documentation generation.</b>
+</p>
 
-This project provides tools and examples for building privacy-preserving smart contracts using FHEVM by Zama. It includes:
+## | Architecture & Overview
 
-- **Base Template**: A complete Hardhat setup for FHEVM development
-- **Example Contracts**: Categorized collection of FHEVM examples
-- **Automation Tools**: Scripts to generate standalone repositories and documentation
-- **Documentation**: GitBook-formatted guides for each example
+| 🧩 **The System**                                                 | ⚡ **The Workflow**                                          |
+| :--------------------------------------------------------------- | :---------------------------------------------------------- |
+| **Modular Library**: Comprehensive collection of FHEVM examples. | **1. Base Template**: Pre-configured Hardhat environment.   |
+| **Smart Scaffolding**: Automated project creation from source.   | **2. Contract Injection**: Selectively inject code & tests. |
+| **Auto-Documentation**: Instant GitBook-ready guide generation.  | **3. Standalone Output**: Isolated, ready-to-deploy repos.  |
+
 
 ## | Quick Start
 
@@ -47,6 +58,22 @@ npm run cli:scan
 
 # List all examples
 npm run cli:list
+
+# Run tests for specific example
+npm run cli:test <example-name>
+npm run cli:test fhe-counter
+```
+
+### 🧪 Testing Examples
+
+You can test examples directly without creating a standalone project first. The tool will temporarily build the project and run tests.
+
+```bash
+# Interactive mode (Select from list)
+npm run cli:test
+
+# Direct mode (Run specific test)
+npm run cli:test fhe-counter
 ```
 
 ### 🔍 Auto-Scan Feature
@@ -85,50 +112,83 @@ npm run cli:scan
 
 ## | Project Structure
 
-```
+```text
 z-hub/
-├── base-template/          # Base Hardhat template (submodule)
-│   ├── contracts/          # Empty (filled by generator)
-│   ├── test/               # Empty (filled by generator)
-│   ├── deploy/             # Deployment scripts
-│   └── hardhat.config.ts   # Hardhat configuration
+├── base-template/          # Pre-configured Hardhat environment used as scaffolding
+├── contracts/              # Source code for all FHEVM example contracts (categorized)
+├── test/                   # Comprehensive test suite for all examples (mirrors contracts/)
+├── docs/                   # Automatically generated documentation (GitBook format)
+├── scripts/                # Core automation motor
+│   ├── cli.ts              # Main interactive/non-interactive CLI router
+│   ├── scan.ts             # Auto-discovery engine for contracts and tests
+│   ├── create-example.ts   # Logic for single example project generation
+│   ├── create-category.ts  # Logic for category-based project generation
+│   ├── generate-docs.ts    # Documentation generator using contract comments
+│   ├── run-tests.ts        # Internal example testing tool
+│   ├── validate.ts         # System health and configuration validator
+│   ├── utils/              # CLI helpers, common logic and visual themes
+│   └── workflows/          # Interactive CLI flow implementations
 │
-├── contracts/              # All example contracts (source)
-│   ├── basic/              # Basic FHE operations
-│   ├── auctions/           # Auction examples
-│   ├── openzeppelin-*/     # Token examples
-│   └── ...                 # More examples
-│
-├── test/                   # All test files (mirrors contracts/)
-│
-├── scripts/                # CLI and automation tools
-│   ├── cli.ts              # Main CLI interface
-│   ├── scan.ts             # Auto-discovery tool
-│   ├── create-example.ts
-│   ├── create-category.ts
-│   └── generate-docs.ts
-│
-├── examples-config.json    # Central configuration
+├── examples-config.json    # Central manifest of all examples, categories, and docs
+├── package.json            # Project dependencies and script shortcuts
 └── README.md               # This file
 ```
 
 ## | Available Examples
 
-### Basic Examples
-- **fhe-counter** - Simple encrypted counter demonstrating FHE basics
-- **encrypt-single-value** - FHE encryption mechanism and common pitfalls
-- **encrypt-multiple-values** - Handling multiple encrypted values
-- **user-decrypt-single-value** - User decryption with permission requirements
-- **user-decrypt-multiple-values** - Decrypting multiple values
-- **fhe-add** - FHE addition operations
-- **fhe-if-then-else** - Conditional operations on encrypted values
+### 🧱 Basic Operations
+*Foundational building blocks for FHE development.*
 
-### Advanced Examples
-- **blind-auction** - Sealed-bid auction with confidential bids
-- **confidential-dutch-auction** - Dutch auction with encrypted prices
+| Example ID              | Key Concept     | Description                                     |
+| :---------------------- | :-------------- | :---------------------------------------------- |
+| **`fhe-counter`**       | Encrypted State | precise state tracking without revealing values |
+| **`fhe-add`**           | Arithmetic      | Trustless addition on encrypted integers        |
+| **`fhe-sub`**           | Arithmetic      | Secure subtraction of encrypted values          |
+| **`fhe-eq`**            | Logic           | Equality checks without decryption              |
+| **`fhe-if-then-else`**  | Logic           | Conditional branching using `FHE.select`        |
+| **`encrypt-s/m-value`** | I/O             | Best practices for single & batch encryption    |
+| **`user-decrypt`**      | Decryption      | User-only data revelation (Permissioned)        |
+| **`public-decrypt`**    | Decryption      | Public data revelation (Global visibility)      |
 
-### OpenZeppelin Integration
-- **erc7984-example** - Confidential token standard implementation
+### 🛡️ OpenZeppelin Integration
+*Standard-compliant confidential tokens & tools.*
+
+| Example ID                  | Standard | Description                                            |
+| :-------------------------- | :------- | :----------------------------------------------------- |
+| **`erc7984-example`**       | ERC7984  | Full confidential token implementation                 |
+| **`erc7984-erc20-wrapper`** | Wrapper  | Wrap public ERC20s into private tokens                 |
+| **`vesting-wallet`**        | Finance  | Private token vesting schedules                        |
+| **`swap-erc7984`**          | DeFi     | Swaps between Private-Private or Private-Public tokens |
+
+### 🚀 Advanced Use Cases
+*Complex protocols pushing the boundaries of on-chain privacy.*
+
+| Example ID              | Domain  | Description                                    |
+| :---------------------- | :------ | :--------------------------------------------- |
+| **`blind-auction`**     | Auction | Sealed-bid auction with completely hidden bids |
+| **`private-messaging`** | Social  | Secure, on-chain encrypted messaging system    |
+| **`anonymous-whistle`** | Social  | Identity-protecting whistleblowing platform    |
+| **`fair-dice`**         | Gaming  | Provably fair RNG using encrypted commits      |
+| **`secret-tip`**        | Social  | Anonymous financial support & tipping          |
+
+### 🏦 Decentralized Finance (DeFi)
+*Privacy-first financial primitives.*
+
+| Example ID          | Primitive  | Description                            |
+| :------------------ | :--------- | :------------------------------------- |
+| **`dark-pool`**     | Trading    | Private order book & matching engine   |
+| **`private-vault`** | Banking    | Confidential asset custody & balances  |
+| **`secret-voting`** | Governance | Encrypted DAO voting with public tally |
+
+### 🔬 Deep Dive & Security
+*Technical patterns for robust development.*
+
+| Example ID             | Topic     | Description                              |
+| :--------------------- | :-------- | :--------------------------------------- |
+| **`access-control`**   | Security  | Managing FHE permissions & re-encryption |
+| **`input-proofs`**     | Security  | Verifying encrypted input validity       |
+| **`handle-lifecycle`** | Internals | Understanding FHE handle storage & scope |
+| **`anti-patterns`**    | Security  | Common mistakes and how to avoid them    |
 
 ## | Core Concepts
 
@@ -197,6 +257,8 @@ npm run cli:category     # Create category project
 npm run cli:docs         # Generate documentation
 npm run cli:list         # List all examples
 npm run cli:scan         # Auto-discover contracts
+npm run cli:test         # Run tests (Interactive/Direct)
+npm run cli:validate     # Validate system health
 npm run help             # Show help
 ```
 
